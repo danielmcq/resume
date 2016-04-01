@@ -1,0 +1,28 @@
+extend default
+
+block content
+  h1 Work Experience
+  .row
+    each job in jobs
+      h2.job-title= job.title
+      .col-md-4
+        span.company-name= job.company
+      .col-md-4.text-center
+        span.company-location.city-state= job.location
+      .col-md-4.text-right
+        span.job-start.month-year= job["start-date"]
+        ' - '
+        span.job-end.month-year= job["end-date"]
+
+      h3 Duties
+      ul
+        if job.duties
+          each duty in job.duties
+            li= duty
+      ul
+        if job.projects
+          each project in job.projects
+            if project.description
+              li= project.description+' ('+project.client+')'
+            else
+              li= project
