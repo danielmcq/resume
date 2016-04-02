@@ -16,7 +16,7 @@ html(lang="en")
         div.col-md-4.text-center
           span.contact-email= person.email
         div.col-md-4.text-right
-          span.contact-phone= person.phone
+          span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
       article
         block content

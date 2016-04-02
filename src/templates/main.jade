@@ -1,7 +1,8 @@
 extend default
 
 block content
-  h1 Work Experience
+  .row
+    h1#work-experience Work Experience
   .row
     each job in jobs
       h2.job-title= job.title
@@ -10,19 +11,48 @@ block content
       .col-md-4.text-center
         span.company-location.city-state= job.location
       .col-md-4.text-right
-        span.job-start.month-year= job["start-date"]
-        ' - '
-        span.job-end.month-year= job["end-date"]
+        span.job-start.month-year= $utils.shortDate(job["start-date"])
+        span!="&nbsp;-&nbsp;"
+        if job["end-date"]
+          span.job-end.month-year= $utils.shortDate(job["end-date"])
+        else
+          span.job-end.month-year Present
 
-      h3 Duties
-      ul
-        if job.duties
+      if job.duties
+        h3 Duties
+        ul
           each duty in job.duties
             li= duty
-      ul
-        if job.projects
+
+      if job.projects
+        h3 Projects
+        ul
           each project in job.projects
             if project.description
               li= project.description+' ('+project.client+')'
             else
               li= project
+
+      if job.accomplishments
+          h3 Accomplishments
+          ul
+            each accomplishment in job.accomplishments
+              li= accomplishment
+
+  .row
+    h1#education Education
+  .row
+    table.table
+      thead
+        tr
+          th School
+          th Where
+          th Study
+          th When
+      tbody
+        each learn in education
+          tr
+            td= learn.institution
+            td= learn.location
+            td= learn.areaOfStudy
+            td= $utils.dateRange(learn.attendStart, learn.attendEnd)
