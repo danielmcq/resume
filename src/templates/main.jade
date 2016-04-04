@@ -5,44 +5,18 @@ block content
     h1#work-experience Work Experience
   .row
     each job in jobs
-      h2.job-title= job.title
-      .col-md-4
-        span.company-name= job.company
-      .col-md-4.text-center
-        span.company-location.city-state= job.location
-      .col-md-4.text-right
-        span.job-start.month-year= $utils.shortDate(job["start-date"])
-        span!="&nbsp;-&nbsp;"
-        if job["end-date"]
-          span.job-end.month-year= $utils.shortDate(job["end-date"])
-        else
-          span.job-end.month-year Present
+      include ./includes/job-header.jade
 
-      if job.duties
-        h3 Duties
-        ul
-          each duty in job.duties
-            li= duty
+      include ./includes/duties.jade
 
-      if job.projects
-        h3 Projects
-        ul
-          each project in job.projects
-            if project.description
-              li= project.description+' ('+project.client+')'
-            else
-              li= project
+      include ./includes/projects.jade
 
-      if job.accomplishments
-          h3 Accomplishments
-          ul
-            each accomplishment in job.accomplishments
-              li= accomplishment
+      include ./includes/accomplistments.jade
 
   .row
     h1#education Education
   .row
-    table.table
+    table.table.table-condensed
       thead
         tr
           th School

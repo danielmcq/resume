@@ -10,13 +10,14 @@ html(lang="en")
     link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
   body
     main.container
-      header
-        div.col-md-4
-          span.contact-name= person.name
-        div.col-md-4.text-center
-          span.contact-email= person.email
-        div.col-md-4.text-right
-          span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
+      .row
+        header
+          div.col-md-4
+            span.contact-name= person.name
+          div.col-md-4.text-center
+            span.contact-email= person.email
+          div.col-md-4.text-right
+            span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
       article
         block content
