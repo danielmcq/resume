@@ -1,11 +1,12 @@
 /*eslint no-console:0*/
 "use strict"
 
+const dateformat = require("dateformat")
 const express    = require("express")
 const fs         = require("fs")
-const utils      = require(__dirname+"/src/js/Utils")
-const dateformat = require("dateformat")
+const morgan     = require("morgan")
 const phone      = require("phone-formatter")
+const utils      = require(__dirname+"/src/js/Utils")
 
 const defaults = {
 	port: process.env.PORT||3000
@@ -17,6 +18,7 @@ let config = Object.assign({},defaults,options)
 const app        = express()
 const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
 
+app.use(morgan("combined"))
 app.use(express.static(__dirname + "/static"))
 
 app.get("/", function (req, res, next) {
