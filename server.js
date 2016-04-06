@@ -1,6 +1,7 @@
 /*eslint no-console:0*/
 "use strict"
 
+const Config     = require("./src/js/Config")
 const dateformat = require("dateformat")
 const express    = require("express")
 const fs         = require("fs")
@@ -8,24 +9,24 @@ const morgan     = require("morgan")
 const phone      = require("phone-formatter")
 const utils      = require(__dirname+"/src/js/Utils")
 
-const defaults = {
-	port: process.env.PORT||3000
-}
-const options = JSON.parse(fs.readFileSync("options.json"))
-let config = Object.assign({},defaults,options)
-
-
 const app        = express()
+const configMgr  = new Config({port: process.env.PORT||3000})
 const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
 
-app.use(morgan("combined"))
-app.use(express.static(__dirname + "/static"))
 
-app.get("/", function (req, res, next) {
-	fs.readFile(__dirname+"/data.json", (err,contents)=>{
-		if (err) { next(err) }
+configMgr.getConfig((config)=>{
+	app.use(morgan("combined"))
+	app.use(express.static(__dirname + "/static"))
 
-		sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
+	app.get("/", function (req, res, next) {
+		fs.readFile(__dirname+"/data.json", (err,contents)=>{
+			if (err) { next(err) }
+
+			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
+		})
+	})
+	app.listen(config.port, ()=>{
+		console.log("Listening on http://localhost:" + config.port)
 	})
 })
 
@@ -48,8 +49,3 @@ function prepareLocalPageData (sourceData) {
 function sendHtmlResponse (res, locals) {
 	res.send( template(locals) )
 }
-
-
-app.listen(config.port, function () {
-	console.log("Listening on http://localhost:" + config.port)
-})
