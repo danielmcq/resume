@@ -7,19 +7,24 @@ const utils      = require(__dirname+"/src/js/Utils")
 const dateformat = require("dateformat")
 const phone      = require("phone-formatter")
 
+const defaults = {
+	port: process.env.PORT||3000
+}
+const options = JSON.parse(fs.readFileSync("options.json"))
+let config = Object.assign({},defaults,options)
+
+
 const app        = express()
 const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
 
 app.use(express.static(__dirname + "/static"))
 
 app.get("/", function (req, res, next) {
-	try {
-		fs.readFile(__dirname+"/data.json", (err,contents)=>{
-			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
-		})
-	} catch (e) {
-		next(e)
-	}
+	fs.readFile(__dirname+"/data.json", (err,contents)=>{
+		if (err) { next(err) }
+
+		sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
+	})
 })
 
 function prepareLocalPageData (sourceData) {
@@ -42,6 +47,7 @@ function sendHtmlResponse (res, locals) {
 	res.send( template(locals) )
 }
 
-app.listen(process.env.PORT || 3000, function () {
-	console.log("Listening on http://localhost:" + (process.env.PORT || 3000))
+
+app.listen(config.port, function () {
+	console.log("Listening on http://localhost:" + config.port)
 })
