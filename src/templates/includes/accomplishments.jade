@@ -4,4 +4,4 @@ if job.accomplishments
 	.col-xs-12
 		ul
 			each accomplishment in job.accomplishments
-				li= accomplishment
+				li= $utils.getDesc(accomplishment)

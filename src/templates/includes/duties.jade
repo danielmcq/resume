@@ -4,4 +4,4 @@ if job.duties
 	.col-xs-12
 		ul
 			each duty in job.duties
-				li= duty
+				li= $utils.getDesc(duty)

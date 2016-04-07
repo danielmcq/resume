@@ -11,7 +11,7 @@ const phone      = require("phone-formatter")
 const utils      = require(__dirname+"/src/js/Utils")
 
 const app        = express()
-const configMgr  = new Config({port: process.env.PORT||3000})
+const configMgr  = new Config({port: process.env.PORT||3000, verbosity: "short"})
 const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
 
 
@@ -23,17 +23,18 @@ configMgr.getConfig((config)=>{
 		fs.readFile(__dirname+"/data.json", (err,contents)=>{
 			if (err) { next(err) }
 
-			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
+			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser), config ))
 		})
 	})
 	app.get("/main.css", (req, res, next)=>{
-		let filePath = "src/less/main.less"
-		fs.readFile(filePath, "utf8", (err, data)=>{
+		const LESS_FILE = "src/less/main.less"
+
+		fs.readFile(LESS_FILE, "utf8", (err, data)=>{
 			if (err) { next(err) }
 
 			less.render(data,
 				{
-					filename: filePath,
+					filename: LESS_FILE,
 					compress: false
 				},
 				(err, output) => {
@@ -51,13 +52,14 @@ configMgr.getConfig((config)=>{
 	})
 })
 
-function prepareLocalPageData (sourceData) {
+function prepareLocalPageData (sourceData, config) {
 	let locals = Object.assign(
 		{
 			"$utils": {
 				dateformat: dateformat,
 				shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy"),
 				dateRange: (start, end) => locals.$utils.shortDate(start)+" - "+(end?locals.$utils.shortDate(end):"Present"),
+				getDesc: (desc)=> getDescription.call(getDescription, desc, config),
 				phone: phone
 			}
 		},
@@ -69,4 +71,35 @@ function prepareLocalPageData (sourceData) {
 
 function sendHtmlResponse (res, locals) {
 	res.send( template(locals) )
+}
+
+function getDescription (desc, config) {
+	const VERBOSITY = config.verbosity||"short"
+
+	let description
+
+	switch (VERBOSITY) {
+	case "long":
+		description = desc.long
+		break
+	case "medium":
+	case "med":
+		description = desc.medium
+		break
+	default:
+		description = desc.short
+		break
+	}
+
+	if (!description) {
+		let verbosities = ["short", "medium", "long"]
+		for (const verbosity of verbosities) {
+			if (desc[verbosity]) {
+				description = desc[verbosity]
+				break
+			}
+		}
+	}
+
+	return description
 }

@@ -4,7 +4,7 @@ if job.projects
 	.col-xs-12
 		ul
 			each project in job.projects
-				if project.description
-					li= project.description+' ('+project.client+')'
+				if project.client
+					li= $utils.getDesc(project)+' ('+project.client+')'
 				else
-					li= project
+					li= $utils.getDesc(project)
