@@ -7,19 +7,18 @@ html(lang="en")
 
     title Resume
 
-    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
     link(rel="stylesheet", href="main.css")
   body
     main.container
       .row.header
         header
-          div.col-md-3
+          div.col-xs-12.col-md-3.text-left
             span.contact-name= person.name
-          div.col-md-3.text-center
-            span.contact-email= person.email
-          div.col-md-3.text-center
-            span.contact-github= person.github
-          div.col-md-3.text-right
+          div.col-xs-6.col-md-3.text-center
+            a.contact-email(href="mailto:"+person.email)= person.email
+          div.col-xs-6.col-md-3.text-center
+            a.contact-github(href="https://github.com/"+person.github, target="_blank")= "github.com/"+person.github
+          div.col-xs-12.col-md-3.text-right
             span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
       article

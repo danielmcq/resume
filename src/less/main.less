@@ -1,3 +1,6 @@
+@import "../../node_modules/bootstrap/less/bootstrap";
+@import "print";
+
 h1 {
 	font-size: 24px;
 }
@@ -12,7 +15,7 @@ h1, h2, h3 {
 }
 
 .row.header {
-	background-color: #E3E3E3;
+	background-color: @gray-lighter;
 	line-height: 2em;
 }
 
@@ -20,5 +23,14 @@ h1, h2, h3 {
 .company-location,
 .job-start,
 .job-end {
-	color: #777;
+	color: @gray-light;
+}
+
+@media (max-width: @screen-xs-max) {
+	header {
+		.text-right,
+		.text-left {
+			text-align: center;
+		}
+	}
 }

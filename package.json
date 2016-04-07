@@ -12,6 +12,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "dateformat": "^1.0.12",
     "eslint": "^2.6.0",
     "express": "^4.13.4",

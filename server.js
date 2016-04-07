@@ -37,10 +37,12 @@ configMgr.getConfig((config)=>{
 					compress: false
 				},
 				(err, output) => {
-					if (err) { next(err) }
+					if (err) {
+						console.log("Error rendering CSS", err)
+						next(err)
+					}
 
-					res.type("css")
-					res.send( output.css )
+					res.type("text/css").send( output.css )
 				})
 		})
 	})

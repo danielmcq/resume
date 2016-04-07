@@ -1,11 +1,11 @@
-.col-md-12
+.col-xs-12
   h2.job-title= job.title
-.col-md-3
+.col-xs-3
   i.company-location.city-state= job.location
-.col-md-3.col-md-offset-1.text-center
+.col-xs-3.col-xs-offset-1.text-center
   if job.company
     i.company-name= job.company
-.col-md-3.col-md-offset-2
+.col-xs-3.col-xs-offset-2
   span.pull-right
     i.job-start.month-year= $utils.shortDate(job["start-date"])
     span!="&nbsp;-&nbsp;"
