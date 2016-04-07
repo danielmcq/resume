@@ -1,10 +1,10 @@
 if job.projects
-  .col-xs-12
-    h3 Projects
-  .col-xs-12
-    ul
-      each project in job.projects
-        if project.description
-          li= project.description+' ('+project.client+')'
-        else
-          li= project
+	.col-xs-12
+		h3 Projects
+	.col-xs-12
+		ul
+			each project in job.projects
+				if project.description
+					li= project.description+' ('+project.client+')'
+				else
+					li= project

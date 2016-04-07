@@ -1,14 +1,14 @@
 table.table.table-condensed
-  thead
-    tr
-      th School
-      th Where
-      th Study
-      th When
-  tbody
-    each learn in education
-      tr
-        td= learn.institution
-        td= learn.location
-        td= learn.areaOfStudy
-        td= $utils.dateRange(learn.attendStart, learn.attendEnd)
+	thead
+		tr
+			th School
+			th Where
+			th Study
+			th When
+	tbody
+		each learn in education
+			tr
+				td= learn.institution
+				td= learn.location
+				td= learn.areaOfStudy
+				td= $utils.dateRange(learn.attendStart, learn.attendEnd)

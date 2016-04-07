@@ -1,25 +1,25 @@
 doctype html
 html(lang="en")
-  head
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge")
-    meta(name="viewport", content="width=device-width, initial-scale=1")
+	head
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1")
 
-    title Resume
+		title Resume
 
-    link(rel="stylesheet", href="main.css")
-  body
-    main.container
-      .row.header
-        header
-          div.col-xs-12.col-md-3.text-left
-            span.contact-name= person.name
-          div.col-xs-6.col-md-3.text-center
-            a.contact-email(href="mailto:"+person.email)= person.email
-          div.col-xs-6.col-md-3.text-center
-            a.contact-github(href="https://github.com/"+person.github, target="_blank")= "github.com/"+person.github
-          div.col-xs-12.col-md-3.text-right
-            span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
+		link(rel="stylesheet", href="main.css")
+	body
+		main.container
+			.row.header
+				header
+					div.col-xs-12.col-md-3.text-left
+						span.contact-name= person.name
+					div.col-xs-6.col-md-3.text-center
+						a.contact-email(href="mailto:"+person.email)= person.email
+					div.col-xs-6.col-md-3.text-center
+						a.contact-github(href="https://github.com/"+person.github, target="_blank")= "github.com/"+person.github
+					div.col-xs-12.col-md-3.text-right
+						span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
-      article
-        block content
+			article
+				block content

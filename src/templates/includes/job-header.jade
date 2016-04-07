@@ -1,15 +1,15 @@
 .col-xs-12
-  h2.job-title= job.title
+	h2.job-title= job.title
 .col-xs-3
-  i.company-location.city-state= job.location
+	i.company-location.city-state= job.location
 .col-xs-3.col-xs-offset-1.text-center
-  if job.company
-    i.company-name= job.company
+	if job.company
+		i.company-name= job.company
 .col-xs-3.col-xs-offset-2
-  span.pull-right
-    i.job-start.month-year= $utils.shortDate(job["start-date"])
-    span!="&nbsp;-&nbsp;"
-    if job["end-date"]
-      i.job-end.month-year= $utils.shortDate(job["end-date"])
-    else
-      i.job-end.month-year Present
+	span.pull-right
+		i.job-start.month-year= $utils.shortDate(job["start-date"])
+		span!="&nbsp;-&nbsp;"
+		if job["end-date"]
+			i.job-end.month-year= $utils.shortDate(job["end-date"])
+		else
+			i.job-end.month-year Present

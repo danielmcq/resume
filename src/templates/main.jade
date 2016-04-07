@@ -1,22 +1,22 @@
 extend default
 
 block content
-  .row
-    .col-md-12
-      h1#work-experience Work Experience
-  .row
-    each job in jobs
-      include ./includes/job-header.jade
+	.row
+		.col-md-12
+			h1#work-experience Work Experience
+	.row
+		each job in jobs
+			include ./includes/job-header.jade
 
-      include ./includes/duties.jade
+			include ./includes/duties.jade
 
-      include ./includes/projects.jade
+			include ./includes/projects.jade
 
-      include ./includes/accomplishments.jade
+			include ./includes/accomplishments.jade
 
-  .row
-    .col-md-12
-      h1#education Education
-  .row
-    .col-md-12
-      include ./includes/education.jade
+	.row
+		.col-md-12
+			h1#education Education
+	.row
+		.col-md-12
+			include ./includes/education.jade
