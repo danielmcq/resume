@@ -16,6 +16,7 @@
     "eslint": "^2.6.0",
     "express": "^4.13.4",
     "jade": "^1.11.0",
+    "less": "^2.6.1",
     "morgan": "^1.7.0",
     "nodemon": "^1.9.1",
     "phone-formatter": "0.0.2"

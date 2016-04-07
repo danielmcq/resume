@@ -1,11 +1,15 @@
-h2.job-title= job.title
-  small.pull-right.company-name= job.company
-.col-md-6
-  span.company-location.city-state= job.location
-.col-md-6
-  span.job-start.month-year= $utils.shortDate(job["start-date"])
-  span!="&nbsp;-&nbsp;"
-  if job["end-date"]
-    span.job-end.month-year= $utils.shortDate(job["end-date"])
-  else
-    span.job-end.month-year Present
+.col-md-12
+  h2.job-title= job.title
+.col-md-3
+  i.company-location.city-state= job.location
+.col-md-3.col-md-offset-1.text-center
+  if job.company
+    i.company-name= job.company
+.col-md-3.col-md-offset-2
+  span.pull-right
+    i.job-start.month-year= $utils.shortDate(job["start-date"])
+    span!="&nbsp;-&nbsp;"
+    if job["end-date"]
+      i.job-end.month-year= $utils.shortDate(job["end-date"])
+    else
+      i.job-end.month-year Present

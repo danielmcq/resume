@@ -5,6 +5,7 @@ const Config     = require("./src/js/Config")
 const dateformat = require("dateformat")
 const express    = require("express")
 const fs         = require("fs")
+const less       = require("less")
 const morgan     = require("morgan")
 const phone      = require("phone-formatter")
 const utils      = require(__dirname+"/src/js/Utils")
@@ -23,6 +24,24 @@ configMgr.getConfig((config)=>{
 			if (err) { next(err) }
 
 			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser) ))
+		})
+	})
+	app.get("/main.css", (req, res, next)=>{
+		let filePath = "src/less/main.less"
+		fs.readFile(filePath, "utf8", (err, data)=>{
+			if (err) { next(err) }
+
+			less.render(data,
+				{
+					filename: filePath,
+					compress: false
+				},
+				(err, output) => {
+					if (err) { next(err) }
+
+					res.type("css")
+					res.send( output.css )
+				})
 		})
 	})
 	app.listen(config.port, ()=>{
