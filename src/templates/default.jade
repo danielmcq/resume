@@ -13,11 +13,13 @@ html(lang="en")
     main.container
       .row.header
         header
-          div.col-md-4
+          div.col-md-3
             span.contact-name= person.name
-          div.col-md-4.text-center
+          div.col-md-3.text-center
             span.contact-email= person.email
-          div.col-md-4.text-right
+          div.col-md-3.text-center
+            span.contact-github= person.github
+          div.col-md-3.text-right
             span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
       article
