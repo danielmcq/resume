@@ -1,0 +1,10 @@
+{
+	"config": {
+		"dataSource": {
+			"type": "file-local",
+			"location": "data.json"
+		},
+		"port": 3000,
+		"verbosity": "short"
+	}
+}

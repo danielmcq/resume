@@ -1,7 +1,7 @@
 /*eslint no-console:0*/
 "use strict"
 
-const Config     = require("./src/js/Config")
+const configMgr  = require("config")
 const dateformat = require("dateformat")
 const express    = require("express")
 const fs         = require("fs")
@@ -11,45 +11,43 @@ const phone      = require("phone-formatter")
 const utils      = require(__dirname+"/src/js/Utils")
 
 const app        = express()
-const configMgr  = new Config({port: process.env.PORT||3000, verbosity: "short"})
+const config     = configMgr.get("config")
 const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
 
 
-configMgr.getConfig((config)=>{
-	app.use(morgan("combined"))
-	app.use(express.static(__dirname + "/static"))
+app.use(morgan("combined"))
+app.use(express.static(__dirname + "/static"))
 
-	app.get("/", function (req, res, next) {
-		fs.readFile(__dirname+"/data.json", (err,contents)=>{
-			if (err) { next(err) }
+app.get("/", function (req, res, next) {
+	fs.readFile(__dirname+"/data.json", (err,contents)=>{
+		if (err) { next(err) }
 
-			sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser), config ))
-		})
+		sendHtmlResponse(res, prepareLocalPageData( JSON.parse(contents, utils.JSON.dateParser), config ))
 	})
-	app.get("/main.css", (req, res, next)=>{
-		const LESS_FILE = "src/less/main.less"
+})
+app.get("/main.css", (req, res, next)=>{
+	const LESS_FILE = "src/less/main.less"
 
-		fs.readFile(LESS_FILE, "utf8", (err, data)=>{
-			if (err) { next(err) }
+	fs.readFile(LESS_FILE, "utf8", (err, data)=>{
+		if (err) { next(err) }
 
-			less.render(data,
-				{
-					filename: LESS_FILE,
-					compress: false
-				},
-				(err, output) => {
-					if (err) {
-						console.log("Error rendering CSS", err)
-						next(err)
-					}
+		less.render(data,
+			{
+				filename: LESS_FILE,
+				compress: false
+			},
+			(err, output) => {
+				if (err) {
+					console.log("Error rendering CSS", err)
+					next(err)
+				}
 
-					res.type("text/css").send( output.css )
-				})
-		})
+				res.type("text/css").send( output.css )
+			})
 	})
-	app.listen(config.port, ()=>{
-		console.log("Listening on http://localhost:" + config.port)
-	})
+})
+app.listen(config.port, ()=>{
+	console.log("Listening on http://localhost:" + config.port)
 })
 
 function prepareLocalPageData (sourceData, config) {
