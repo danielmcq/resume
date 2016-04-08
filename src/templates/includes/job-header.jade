@@ -6,7 +6,7 @@
 	if job.company
 		i.company-name= job.company
 .col-xs-3.col-xs-offset-2
-	span.pull-right
+	span.job-date-range.pull-right
 		i.job-start.month-year= $utils.shortDate(job["start-date"])
 		span!="&nbsp;-&nbsp;"
 		if job["end-date"]
