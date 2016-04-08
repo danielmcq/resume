@@ -19,7 +19,7 @@ html(lang="en")
 					div.col-xs-6.col-md-3.text-center
 						a.contact-github(href="https://github.com/"+person.github, target="_blank")= "github.com/"+person.github
 					div.col-xs-12.col-md-3.text-right
-						span.contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
+						a(href="tel:+1"+$utils.phone.normalize(person.phone)).contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
 
 			article
 				block content
