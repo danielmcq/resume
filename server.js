@@ -5,6 +5,7 @@ const configMgr  = require("config")
 const dateformat = require("dateformat")
 const express    = require("express")
 const fs         = require("fs")
+const jade       = require("jade")
 const less       = require("less")
 const morgan     = require("morgan")
 const pdf        = require("html-pdf")
@@ -13,7 +14,7 @@ const utils      = require(__dirname+"/src/js/Utils")
 
 const app        = express()
 const config     = configMgr.get("config")
-const template   = require("jade").compileFile(__dirname + "/src/templates/main.jade")
+const template   = jade.compileFile(__dirname + "/src/templates/main.jade")
 
 app.use(express.static(__dirname + "/static"))
 app.use(morgan("combined"))
@@ -26,7 +27,10 @@ app.get("/", (req, res, next)=>{
 
 app.get("/resume.pdf",(req, res, next)=>{
 	getPageData(next,(pageData)=>{
-		const html = getHtmlResponse(prepareLocalPageData( pageData, config ))
+		let pdfPageData = prepareLocalPageData( Object.assign({}, pageData, {docformat:"pdf"}), config )
+		const html = getHtmlResponse(pdfPageData)
+		// const pageHeaderHtml = jade.compileFile(__dirname + "/src/templates/includes/header.jade")(pdfPageData, config)
+		// const pdfConfig = Object.assign({}, configMgr.get("pdfHtmlConfig"), {header: {height: ".25in", contents: pageHeaderHtml}})
 		const pdfConfig = configMgr.get("pdfHtmlConfig")
 
 		pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
@@ -71,11 +75,12 @@ function prepareLocalPageData (sourceData, config) {
 		{
 			"$utils": {
 				dateformat: dateformat,
-				shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy"),
 				dateRange: (start, end) => locals.$utils.shortDate(start)+" - "+(end?locals.$utils.shortDate(end):"Present"),
 				getDesc: (desc)=> getDescription.call(getDescription, desc, config),
-				phone: phone
-			}
+				phone: phone,
+				shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy")
+			},
+			docformat: "html"
 		},
 		sourceData
 	)
