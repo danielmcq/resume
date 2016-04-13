@@ -1,18 +1,20 @@
 "use strict"
 
-function Describer (data, options) {
-	const DATA_DEFAULTS = { short:"", medium:"", long: "" }
-	const OPTS_DEFAULT = { verbosity:"short" }
+class Describer {
+	constructor (data, options) {
+		const DATA_DEFAULTS = { short:"", medium:"", long: "" }
+		const OPTS_DEFAULT = { verbosity:"short" }
 
-	this.data = Object.assign({}, DATA_DEFAULTS, data)
-	this.config = Object.assign({}, OPTS_DEFAULT, options)
-}
+		this.data = Object.assign({}, DATA_DEFAULTS, data)
+		this.config = Object.assign({}, OPTS_DEFAULT, options)
+	}
 
-Describer.prototype = {
-	text: function(verbosity=this.config.verbosity) {
+	text () {
+		const VERBOSITY = this.config.verbosity
+
 		let output
 
-		switch (verbosity) {
+		switch (VERBOSITY) {
 		case "long":
 			output = this.data.long
 			break
@@ -26,10 +28,10 @@ Describer.prototype = {
 		}
 
 		if (!output) {
-			const verbosities = ["short", "medium", "long"]
-			for (const verb of verbosities) {
-				if (this.data[verb]) {
-					output = this.data[verb]
+			const VERBOSITIES = ["short", "medium", "long"]
+			for (const verbosity of VERBOSITIES) {
+				if (this.data[verbosity]) {
+					output = this.data[verbosity]
 					break
 				}
 			}

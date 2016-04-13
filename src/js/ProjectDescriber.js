@@ -2,23 +2,16 @@
 
 const Describer = require("./Describer")
 
-function ProjectDescriber () {
-	Describer.apply(this, arguments)
-}
+class ProjectDescriber extends Describer {
+	text (){
+		let output = super.text()
 
-// Extend Describer class
-ProjectDescriber.prototype = Object.create(Describer.prototype)
-ProjectDescriber.prototype.constructor = ProjectDescriber
-ProjectDescriber.prototype.parent = Describer.prototype
+		if (this.data.client) {
+			output += ` (${this.data.client})`
+		}
 
-ProjectDescriber.prototype.text = function(){
-	let output = Describer.prototype.text.call(this)
-
-	if (this.data.client) {
-		output += ` (${this.data.client})`
+		return output
 	}
-
-	return output
 }
 
 module.exports = ProjectDescriber
