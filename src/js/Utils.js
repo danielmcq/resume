@@ -25,36 +25,6 @@ module.exports = {
 	},
 	dateformat: dateformat,
 	dateRange: (start, end) => this.shortDate(start)+" - "+(end?this.shortDate(end):"Present"),
-	getDescription: function (desc, config) {
-		const VERBOSITY = config.verbosity||"short"
-
-		let description
-
-		switch (VERBOSITY) {
-		case "long":
-			description = desc.long
-			break
-		case "medium":
-		case "med":
-			description = desc.medium
-			break
-		default:
-			description = desc.short
-			break
-		}
-
-		if (!description) {
-			let verbosities = ["short", "medium", "long"]
-			for (const verbosity of verbosities) {
-				if (desc[verbosity]) {
-					description = desc[verbosity]
-					break
-				}
-			}
-		}
-
-		return description
-	},
 	phone: phone,
 	shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy")
 }

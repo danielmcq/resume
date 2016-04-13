@@ -79,7 +79,6 @@ function prepareLocalPageData (sourceData, config) {
 			Utils: Utils,
 			"$utils": {
 				dateRange: (start, end) => locals.$utils.shortDate(start)+" - "+(end?locals.$utils.shortDate(end):"Present"),
-				getDesc: (desc)=> Utils.getDescription.call(Utils, desc, config),
 				shortDate: (date)=> Utils.dateformat.call(Utils.dateformat, date, "mmm yyyy")
 			}
 		},
