@@ -4,23 +4,25 @@ const Job = require("./Job")
 const Person = require("./Person")
 const Study = require("./Study")
 
-function Resume (person, jobs=[], studies=[], opts={verbosity:"short"}) {
-	Object.assign(this, opts)
+class Resume {
+	constructor (person, jobs=[], studies=[], opts={verbosity:"short"}) {
+		Object.assign(this, opts)
 
-	this.person = person
+		this.person = person
 
-	if (!(this.person instanceof Person)) {
-		this.person = new Person(person)
+		if (!(this.person instanceof Person)) {
+			this.person = new Person(person)
+		}
+
+		this._initJobs(jobs)
+		this._initStudies(studies)
 	}
 
-	this._initJobs(jobs)
-	this._initStudies(studies)
-}
+	getJobs () { return this.jobs }
 
-Resume.prototype = {
-	getJobs: function() { return this.jobs },
-	getStudies: function() { return this.studies},
-	_initJobs: function(jobs){
+	getStudies () { return this.studies }
+
+	_initJobs (jobs) {
 		this.jobs = this.jobs||[]
 
 		for (let job of jobs) {
@@ -30,8 +32,9 @@ Resume.prototype = {
 				this.jobs.push(job)
 			}
 		}
-	},
-	_initStudies: function(studies){
+	}
+
+	_initStudies (studies) {
 		this.studies = this.studies||[]
 
 		for (let study of studies) {
