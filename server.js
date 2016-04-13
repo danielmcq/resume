@@ -1,21 +1,19 @@
 /*eslint no-console:0*/
 "use strict"
 
-const configMgr  = require("config")
-const dateformat = require("dateformat")
-const express    = require("express")
-const fs         = require("fs")
-const jade       = require("jade")
-const less       = require("less")
-const morgan     = require("morgan")
-const Resume     = require(__dirname+"/src/js/Resume")
-const pdf        = require("html-pdf")
-const phone      = require("phone-formatter")
-const utils      = require(__dirname+"/src/js/Utils")
+const configMgr = require("config")
+const express   = require("express")
+const fs        = require("fs")
+const jade      = require("jade")
+const less      = require("less")
+const morgan    = require("morgan")
+const Resume    = require(__dirname+"/src/js/Resume")
+const pdf       = require("html-pdf")
+const Utils     = require(__dirname+"/src/js/Utils")
 
-const app        = express()
-const config     = configMgr.get("config")
-const template   = jade.compileFile(__dirname + "/src/templates/main.jade")
+const app       = express()
+const config    = configMgr.get("config")
+const template  = jade.compileFile(__dirname + "/src/templates/main.jade")
 
 app.use(express.static(__dirname + "/static"))
 app.use(morgan("combined"))
@@ -67,22 +65,23 @@ app.listen(config.port, ()=>{
 	console.log("Listening on %s",getUrlBase())
 })
 
+
 function getUrlBase () {
 	return `http://localhost:${config.port}/`
 }
 
+
 function prepareLocalPageData (sourceData, config) {
 	let locals = Object.assign(
 		{
+			docformat: "html",
+			resume: new Resume(sourceData.person, sourceData.jobs, sourceData.education, config),
+			Utils: Utils,
 			"$utils": {
-				dateformat: dateformat,
 				dateRange: (start, end) => locals.$utils.shortDate(start)+" - "+(end?locals.$utils.shortDate(end):"Present"),
-				getDesc: (desc)=> getDescription.call(getDescription, desc, config),
-				phone: phone,
-				shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy")
-			},
-			resume: new Resume(sourceData.person, sourceData.jobs, sourceData.education),
-			docformat: "html"
+				getDesc: (desc)=> Utils.getDescription.call(Utils, desc, config),
+				shortDate: (date)=> Utils.dateformat.call(Utils.dateformat, date, "mmm yyyy")
+			}
 		},
 		sourceData
 	)
@@ -90,47 +89,18 @@ function prepareLocalPageData (sourceData, config) {
 	return locals
 }
 
+
 function getHtmlResponse (locals) {
 	return template(locals)
 }
 
+
 function getPageData (next, callback) {
 	fs.readFile(__dirname+"/data.json", (err,contents)=>{
 		if (err) { next(err) } else {
-			callback(JSON.parse(contents, utils.JSON.dateParser))
+			callback(JSON.parse(contents, Utils.JSON.dateParser))
 		}
 	})
-}
-
-function getDescription (desc, config) {
-	const VERBOSITY = config.verbosity||"short"
-
-	let description
-
-	switch (VERBOSITY) {
-	case "long":
-		description = desc.long
-		break
-	case "medium":
-	case "med":
-		description = desc.medium
-		break
-	default:
-		description = desc.short
-		break
-	}
-
-	if (!description) {
-		let verbosities = ["short", "medium", "long"]
-		for (const verbosity of verbosities) {
-			if (desc[verbosity]) {
-				description = desc[verbosity]
-				break
-			}
-		}
-	}
-
-	return description
 }
 
 

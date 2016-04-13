@@ -4,7 +4,9 @@ const Job = require("./Job")
 const Person = require("./Person")
 const Study = require("./Study")
 
-function Resume (person, jobs=[], studies=[]) {
+function Resume (person, jobs=[], studies=[], opts={verbosity:"short"}) {
+	Object.assign(this, opts)
+
 	this.person = person
 
 	if (!(this.person instanceof Person)) {

@@ -9,4 +9,4 @@
 		div.col-xs-6.col-md-3.text-center
 			a.contact-github(href="https://github.com/"+resume.person.github, target="_blank")= "github.com/"+resume.person.github
 		div.col-xs-12.col-md-3.text-right
-			a(href="tel:+1"+$utils.phone.normalize(resume.person.phone)).contact-phone= $utils.phone.format(resume.person.phone, "NNN.NNN.NNNN")
+			a(href="tel:+1"+Utils.phone.normalize(resume.person.phone)).contact-phone= Utils.phone.format(resume.person.phone, "NNN.NNN.NNNN")
