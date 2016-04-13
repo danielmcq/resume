@@ -1,7 +1,8 @@
-if job.duties
+- duties = job.getDuties()
+if duties.length
 	.col-xs-12
 		h3 Duties
 	.col-xs-12
 		ul
-			each duty in job.duties
+			each duty in duties
 				li= $utils.getDesc(duty)

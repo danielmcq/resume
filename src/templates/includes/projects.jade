@@ -1,9 +1,10 @@
-if job.projects
+- projects = job.getProjects()
+if projects.length
 	.col-xs-12
 		h3 Projects
 	.col-xs-12
 		ul
-			each project in job.projects
+			each project in projects
 				if project.client
 					li= $utils.getDesc(project)+' ('+project.client+')'
 				else

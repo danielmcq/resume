@@ -8,6 +8,7 @@ const fs         = require("fs")
 const jade       = require("jade")
 const less       = require("less")
 const morgan     = require("morgan")
+const Resume     = require(__dirname+"/src/js/Resume")
 const pdf        = require("html-pdf")
 const phone      = require("phone-formatter")
 const utils      = require(__dirname+"/src/js/Utils")
@@ -80,6 +81,7 @@ function prepareLocalPageData (sourceData, config) {
 				phone: phone,
 				shortDate: (date)=> dateformat.call(dateformat, date, "mmm yyyy")
 			},
+			resume: new Resume(sourceData.person, sourceData.jobs, sourceData.education),
 			docformat: "html"
 		},
 		sourceData

@@ -1,7 +1,8 @@
-if job.accomplishments
+- accomplishments = job.getAccomplishments()
+if accomplishments.length
 	.col-xs-12
 		h3 Accomplishments
 	.col-xs-12
 		ul
-			each accomplishment in job.accomplishments
+			each accomplishment in accomplishments
 				li= $utils.getDesc(accomplishment)

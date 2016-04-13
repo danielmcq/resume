@@ -3,10 +3,10 @@
 .row.header
 	header
 		div.col-xs-12.col-md-3.text-left
-			span.contact-name= person.name
+			span.contact-name= resume.person.name
 		div.col-xs-6.col-md-3.text-center
-			a.contact-email(href="mailto:"+person.email)= person.email
+			a.contact-email(href="mailto:"+resume.person.email)= resume.person.email
 		div.col-xs-6.col-md-3.text-center
-			a.contact-github(href="https://github.com/"+person.github, target="_blank")= "github.com/"+person.github
+			a.contact-github(href="https://github.com/"+resume.person.github, target="_blank")= "github.com/"+resume.person.github
 		div.col-xs-12.col-md-3.text-right
-			a(href="tel:+1"+$utils.phone.normalize(person.phone)).contact-phone= $utils.phone.format(person.phone, "NNN.NNN.NNNN")
+			a(href="tel:+1"+$utils.phone.normalize(resume.person.phone)).contact-phone= $utils.phone.format(resume.person.phone, "NNN.NNN.NNNN")
