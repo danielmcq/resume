@@ -5,7 +5,4 @@ if projects.length
 	.col-xs-12
 		ul
 			each project in projects
-				if project.client
-					li= $utils.getDesc(project)+' ('+project.client+')'
-				else
-					li= $utils.getDesc(project)
+				li= project.text()

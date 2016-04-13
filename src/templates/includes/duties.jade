@@ -5,4 +5,4 @@ if duties.length
 	.col-xs-12
 		ul
 			each duty in duties
-				li= $utils.getDesc(duty)
+				li= duty.text()

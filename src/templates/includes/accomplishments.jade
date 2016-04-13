@@ -5,4 +5,4 @@ if accomplishments.length
 	.col-xs-12
 		ul
 			each accomplishment in accomplishments
-				li= $utils.getDesc(accomplishment)
+				li= accomplishment.text()

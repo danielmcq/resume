@@ -25,7 +25,7 @@ Resume.prototype = {
 
 		for (let job of jobs) {
 			if (!(job instanceof Job)) {
-				this.jobs.push(new Job(job))
+				this.jobs.push(new Job(job, {verbosity:this.verbosity}))
 			} else {
 				this.jobs.push(job)
 			}
