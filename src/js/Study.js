@@ -1,7 +1,7 @@
 "use strict"
 
 class Study {
-	constructor (options={}) {
+	constructor (options) {
 		const DEFAULTS = {
 			institution:"",
 			location:"",

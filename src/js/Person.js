@@ -1,7 +1,7 @@
 "use strict"
 
 class Person {
-	constructor (options={}) {
+	constructor (options) {
 		const DEFAULTS = {
 			name:"",
 			email:"",

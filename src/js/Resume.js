@@ -2,46 +2,58 @@
 
 const Job = require("./Job")
 const Person = require("./Person")
+const ProjectDescriber = require("./ProjectDescriber")
 const Study = require("./Study")
 
 class Resume {
-	constructor (person, jobs=[], studies=[], opts={verbosity:"short"}) {
-		Object.assign(this, opts)
+	constructor (data, options) {
+		const DATA_DEFAULTS = {
+			person: {},
+			jobs: [],
+			personalProjects: [],
+			studies: []
+		}
+		const OPTS_DEFAULT = {verbosity:"short"}
 
-		this.person = person
+		this.config = Object.assign({}, OPTS_DEFAULT, options)
 
-		if (!(this.person instanceof Person)) {
-			this.person = new Person(person)
+		this.data = Object.assign({}, DATA_DEFAULTS, data)
+
+		if (!(this.data.person instanceof Person)) {
+			this.data.person = new Person(this.data.person)
 		}
 
-		this._initJobs(jobs)
-		this._initStudies(studies)
+		this._initJobs(this.data.jobs)
+		this._initPersonalProjects(this.data.personalProjects)
+		this._initStudies(this.data.studies)
 	}
 
-	getJobs () { return this.jobs }
+	getJobs () { return this.data.jobs }
 
-	getStudies () { return this.studies }
+	getPerson () { return this.data.person }
+
+	getStudies () { return this.data.studies }
 
 	_initJobs (jobs) {
-		this.jobs = this.jobs||[]
+		for (let i = 0; i < jobs.length; i++) {
+			if (!(jobs[i] instanceof Job)) {
+				jobs[i] = new Job(jobs[i], this.config)
+			}
+		}
+	}
 
-		for (let job of jobs) {
-			if (!(job instanceof Job)) {
-				this.jobs.push(new Job(job, {verbosity:this.verbosity}))
-			} else {
-				this.jobs.push(job)
+	_initPersonalProjects (personalProjects) {
+		for (let i = 0; i < personalProjects.length; i++) {
+			if (!(personalProjects[i] instanceof ProjectDescriber)) {
+				personalProjects[i] = new ProjectDescriber(personalProjects[i])
 			}
 		}
 	}
 
 	_initStudies (studies) {
-		this.studies = this.studies||[]
-
-		for (let study of studies) {
-			if (!(study instanceof Study)) {
-				this.studies.push(new Study(study))
-			} else {
-				this.studies.push(study)
+		for (let i = 0; i < studies.length; i++) {
+			if (!(studies[i] instanceof Study)) {
+				studies[i] = new Study(studies[i])
 			}
 		}
 	}

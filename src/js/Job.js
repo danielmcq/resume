@@ -37,7 +37,9 @@ class Job {
 
 	getSkills () { return this.data.skills }
 
-	_initDescribers (describers=[], Subdescriber=Describer){
+	_initDescribers (describers, Subdescriber){
+		Subdescriber = Subdescriber || Describer
+
 		for (let i in describers) {
 			if ( !(describers[i] instanceof Subdescriber) ) {
 				describers[i] = new Subdescriber(describers[i], this.config)

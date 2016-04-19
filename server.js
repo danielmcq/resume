@@ -75,7 +75,7 @@ function prepareLocalPageData (sourceData, config) {
 	let locals = Object.assign(
 		{
 			docformat: "html",
-			resume: new Resume(sourceData.person, sourceData.jobs, sourceData.education, config),
+			resume: new Resume(sourceData, config),
 			Utils: Utils,
 			"$utils": {
 				dateRange: (start, end) => locals.$utils.shortDate(start)+" - "+(end?locals.$utils.shortDate(end):"Present"),
