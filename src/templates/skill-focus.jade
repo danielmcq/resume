@@ -1,0 +1,29 @@
+extend default
+
+block content
+	- jobs = resume.getJobs()
+	if jobs.length
+		.row
+			.col-md-12.col-xs-12
+				h1#work-experience Work Experience
+		.row
+			each job in jobs
+				include ./includes/job-header.jade
+
+				include ./includes/duties-6.jade
+
+				include ./includes/projects-6.jade
+
+				include ./includes/accomplishments-6.jade
+
+				include ./includes/skills-6.jade
+
+				.col-xs-12
+					hr
+
+	.row
+		.col-md-12.col-xs-12
+			h1#education Education
+	.row
+		.col-md-12.col-xs-12
+			include ./includes/education.jade

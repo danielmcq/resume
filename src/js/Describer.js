@@ -5,6 +5,10 @@ class Describer {
 		const DATA_DEFAULTS = { short:"", medium:"", long: "" }
 		const OPTS_DEFAULT = { verbosity:"short" }
 
+		if (typeof data === "string") {
+			data = { short: data }
+		}
+
 		this.data = Object.assign({}, DATA_DEFAULTS, data)
 		this.config = Object.assign({}, OPTS_DEFAULT, options)
 	}

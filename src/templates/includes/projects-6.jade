@@ -1,0 +1,7 @@
+- projects = job.getProjects()
+if projects.length
+	.col-xs-12.col-sm-6
+		h3 Projects
+		ul
+			each project in projects
+				li= project.text()

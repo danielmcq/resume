@@ -25,6 +25,25 @@ h1, h2, h3 {
 	color: @gray-light;
 }
 
+.skills-section {
+	span.skill {
+		&:after {
+			content: "   -   ";
+		}
+
+		&:last-child:after {
+			content: none;
+		}
+	}
+}
+
+.col-xs-12 {
+	hr {
+		margin-bottom: 0.5em;
+		margin-top: 0.5em;
+	}
+}
+
 @media (max-width: @screen-xs-max) {
 	header {
 		.text-right,

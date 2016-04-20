@@ -4,7 +4,7 @@
 	i.company-location.city-state= job.get("location")
 .col-xs-3.col-xs-offset-1.text-center
 	if job.get("company")
-		i.company-name= job.get("company")
+		i.company-name!= job.get("company")
 .col-xs-3.col-xs-offset-2
 	span.job-date-range.pull-right
 		i.job-start.month-year= $utils.shortDate(job.get("start-date"))

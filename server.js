@@ -20,14 +20,21 @@ app.use(morgan("combined"))
 
 app.get("/", (req, res, next)=>{
 	getPageData(next,(pageData)=>{
-		res.send( getHtmlResponse(prepareLocalPageData( pageData, config )) )
+		res.send( getHtmlResponse(prepareLocalPageData( pageData, config ), template) )
+	})
+})
+
+app.get("/skills", (req, res, next)=>{
+	getPageData(next,(pageData)=>{
+		let template = jade.compileFile(__dirname + "/src/templates/skill-focus.jade")
+		res.send( getHtmlResponse(prepareLocalPageData( pageData, config ), template) )
 	})
 })
 
 app.get("/resume.pdf",(req, res, next)=>{
 	getPageData(next,(pageData)=>{
 		let pdfPageData = prepareLocalPageData( Object.assign({}, pageData, {docformat:"pdf"}), config )
-		const html = getHtmlResponse(pdfPageData)
+		const html = getHtmlResponse(pdfPageData, template)
 		// const pageHeaderHtml = jade.compileFile(__dirname + "/src/templates/includes/header.jade")(pdfPageData, config)
 		// const pdfConfig = Object.assign({}, configMgr.get("pdfHtmlConfig"), {header: {height: ".25in", contents: pageHeaderHtml}})
 		const pdfConfig = configMgr.get("pdfHtmlConfig")
@@ -89,7 +96,7 @@ function prepareLocalPageData (sourceData, config) {
 }
 
 
-function getHtmlResponse (locals) {
+function getHtmlResponse (locals, template) {
 	return template(locals)
 }
 

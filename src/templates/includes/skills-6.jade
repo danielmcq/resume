@@ -1,0 +1,7 @@
+- skills = job.getSkills()
+if skills.length
+	.col-xs-12.skills-section
+		h3 Skills and technologies used
+		.skill-list
+			each skill in skills
+				span.skill= skill.text()
