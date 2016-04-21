@@ -8,6 +8,7 @@ const jade    = require("jade")
 const less    = require("less")
 const morgan  = require("morgan")
 const pdf     = require("html-pdf")
+const url     = require("url")
 const winston = require("winston")
 
 // project classes
@@ -69,13 +70,8 @@ app.get("/main.css", (req, res, next)=>{
 	})
 })
 app.listen(config.port, ()=>{
-	winston.info(`Listening on ${getUrlBase()}`)
+	winston.info(`Listening on ${url.format(config)}`)
 })
-
-
-function getUrlBase () {
-	return `http://localhost:${config.port}/`
-}
 
 
 function prepareLocalPageData (sourceData, config) {
@@ -97,7 +93,7 @@ function prepareLocalPageData (sourceData, config) {
 
 
 function resolveHrefForPdf (html) {
-	const URL_BASE = getUrlBase()
+	const URL_BASE = url.format(config)
 	const HREF_REGEX = /href="(?!http)([^"]+)"/
 
 	return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)

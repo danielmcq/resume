@@ -4,7 +4,9 @@
 			"location": "data.json",
 			"type": "file-local"
 		},
+		"hostname": "localhost",
 		"port": 3000,
+		"protocol": "http",
 		"verbosity": "short"
 	},
 	"pdfHtmlConfig": {
