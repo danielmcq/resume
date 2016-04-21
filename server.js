@@ -1,49 +1,49 @@
-/*eslint no-console:0*/
 "use strict"
 
-const configMgr = require("config")
-const express   = require("express")
-const fs        = require("fs")
-const jade      = require("jade")
-const less      = require("less")
-const morgan    = require("morgan")
-const Resume    = require(__dirname+"/src/js/Resume")
-const pdf       = require("html-pdf")
-const Utils     = require(__dirname+"/src/js/Utils")
+// node libs
+const Config  = require("config")
+const express = require("express")
+const fs      = require("fs")
+const jade    = require("jade")
+const less    = require("less")
+const morgan  = require("morgan")
+const pdf     = require("html-pdf")
+const winston = require("winston")
 
-const app       = express()
-const config    = configMgr.get("config")
-const template  = jade.compileFile(__dirname + "/src/templates/main.jade")
+// project classes
+const DataManager = require( "./src/js/DataManager" )
+const Resume      = require( "./src/js/Resume" )
+const Utils       = require( "./src/js/Utils" )
 
-app.use(express.static(__dirname + "/static"))
+// server objects
+const app         = express()
+const config      = Config.get("config")
+const dataManager = new DataManager(config.datasource)
+const template    = jade.compileFile( "./src/templates/main.jade" )
+
+app.use(express.static( "./static" ))
 app.use(morgan("combined"))
 
-app.get("/", (req, res, next)=>{
-	getPageData(next,(pageData)=>{
-		res.send( getHtmlResponse(prepareLocalPageData( pageData, config ), template) )
-	})
+app.get("/", (req, res)=>{
+	res.send( template(prepareLocalPageData( dataManager.data, config )) )
 })
 
-app.get("/skills", (req, res, next)=>{
-	getPageData(next,(pageData)=>{
-		let template = jade.compileFile(__dirname + "/src/templates/skill-focus.jade")
-		res.send( getHtmlResponse(prepareLocalPageData( pageData, config ), template) )
-	})
+app.get("/skills", (req, res)=>{
+	let template = jade.compileFile( "./src/templates/skill-focus.jade" )
+	res.send( template(prepareLocalPageData( dataManager.data, config )) )
 })
 
-app.get("/resume.pdf",(req, res, next)=>{
-	getPageData(next,(pageData)=>{
-		let pdfPageData = prepareLocalPageData( Object.assign({}, pageData, {docformat:"pdf"}), config )
-		const html = getHtmlResponse(pdfPageData, template)
-		// const pageHeaderHtml = jade.compileFile(__dirname + "/src/templates/includes/header.jade")(pdfPageData, config)
-		// const pdfConfig = Object.assign({}, configMgr.get("pdfHtmlConfig"), {header: {height: ".25in", contents: pageHeaderHtml}})
-		const pdfConfig = configMgr.get("pdfHtmlConfig")
+app.get("/resume.pdf",(req, res)=>{
+	let pdfPageData = prepareLocalPageData( Object.assign({}, dataManager.data, {docformat:"pdf"}), config )
+	const html = template(pdfPageData)
+	// const pageHeaderHtml = jade.compileFile(__dirname + "/src/templates/includes/header.jade")(pdfPageData, config)
+	// const pdfConfig = Object.assign({}, Config.get("pdfHtmlConfig"), {header: {height: ".25in", contents: pageHeaderHtml}})
+	const pdfConfig = Config.get("pdfHtmlConfig")
 
-		pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
-			res.type("pdf")
-			res.set("Content-Disposition", "attachment; filename=resume.pdf")
-			stream.pipe(res)
-		})
+	pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
+		res.type("pdf")
+		res.set("Content-Disposition", "attachment; filename=resume.pdf")
+		stream.pipe(res)
 	})
 })
 
@@ -60,7 +60,7 @@ app.get("/main.css", (req, res, next)=>{
 			},
 			(err, output) => {
 				if (err) {
-					console.log("Error rendering CSS", err)
+					winston.error(`Error rendering CSS from LESS file '${LESS_FILE}'\n${err}`)
 					next(err)
 				}
 
@@ -69,7 +69,7 @@ app.get("/main.css", (req, res, next)=>{
 	})
 })
 app.listen(config.port, ()=>{
-	console.log("Listening on %s",getUrlBase())
+	winston.info(`Listening on ${getUrlBase()}`)
 })
 
 
@@ -93,20 +93,6 @@ function prepareLocalPageData (sourceData, config) {
 	)
 
 	return locals
-}
-
-
-function getHtmlResponse (locals, template) {
-	return template(locals)
-}
-
-
-function getPageData (next, callback) {
-	fs.readFile(__dirname+"/data.json", (err,contents)=>{
-		if (err) { next(err) } else {
-			callback(JSON.parse(contents, Utils.JSON.dateParser))
-		}
-	})
 }
 
 
