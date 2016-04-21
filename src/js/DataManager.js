@@ -1,13 +1,16 @@
 "use strict"
 
-const Firebase  = require("firebase")
-const fs        = require("fs")
-const path      = require("path")
-const Utils     = require("./Utils")
-const winston   = require("winston")
+const EventEmitter = require("events")
+const Firebase     = require("firebase")
+const fs           = require("fs")
+const path         = require("path")
+const Utils        = require("./Utils")
+const winston      = require("winston")
 
-class DataManager {
+class DataManager extends EventEmitter {
 	constructor (options) {
+		super()
+
 		const OPT_DEFAULTS = { type: "file", location: path.join(process.cwd(), "data.json") }
 
 		this._config = Object.assign({}, OPT_DEFAULTS, options)
@@ -40,6 +43,7 @@ class DataManager {
 
 		this._firebase.on("value", (snapshot)=>{
 			this._data = snapshot.val()
+			this.emit("data", this._data)
 		}, (err)=>{
 			winston.error(`Failed to parse JSON data from Firebase source ${this._config.location}\n${err}`)
 		})
@@ -52,6 +56,7 @@ class DataManager {
 					throw err
 				} else {
 					this._data = JSON.parse(contents, Utils.JSON.dateParser)
+					this.emit("data", this._data)
 				}
 			} catch (er) {
 				winston.error(`Failed to parse JSON data from '${dataFile}'\n${er}`)
