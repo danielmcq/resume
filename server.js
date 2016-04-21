@@ -1,11 +1,9 @@
 "use strict"
 
 // node libs
-const Config  = require("config")
+const config  = require("config")
 const express = require("express")
-const fs      = require("fs")
 const jade    = require("jade")
-const less    = require("less")
 const morgan  = require("morgan")
 const pdf     = require("html-pdf")
 const url     = require("url")
@@ -13,65 +11,41 @@ const winston = require("winston")
 
 // project classes
 const DataManager = require( "./src/js/DataManager" )
+const LessManager = require( "./src/js/LessManager" )
 const Resume      = require( "./src/js/Resume" )
 const Utils       = require( "./src/js/Utils" )
 
 // server objects
-const app         = express()
-const config      = Config.get("config")
-const dataManager = new DataManager(config.dataSource)
-const template    = jade.compileFile( "./src/templates/main.jade" )
+const dataManager    = new DataManager( config.get("dataSource") )
+const lessManager    = new LessManager()
+const mainTemplate   = jade.compileFile( "./src/templates/main.jade" )
+const skillsTemplate = jade.compileFile( "./src/templates/skill-focus.jade" )
 
-app.use(express.static( "./static" ))
-app.use(morgan("combined"))
-
-app.get("/", (req, res)=>{
-	res.send( template(prepareLocalPageData( dataManager.data, config )) )
-})
-
-app.get("/skills", (req, res)=>{
-	let template = jade.compileFile( "./src/templates/skill-focus.jade" )
-	res.send( template(prepareLocalPageData( dataManager.data, config )) )
-})
-
-app.get("/resume.pdf",(req, res)=>{
-	let pdfPageData = prepareLocalPageData( Object.assign({}, dataManager.data, {docformat:"pdf"}), config )
-	const html = template(pdfPageData)
-	// const pageHeaderHtml = jade.compileFile(__dirname + "/src/templates/includes/header.jade")(pdfPageData, config)
-	// const pdfConfig = Object.assign({}, Config.get("pdfHtmlConfig"), {header: {height: ".25in", contents: pageHeaderHtml}})
-	const pdfConfig = Config.get("pdfHtmlConfig")
-
-	pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
-		res.type("pdf")
-		res.set("Content-Disposition", "attachment; filename=resume.pdf")
-		stream.pipe(res)
+express()
+	.use(morgan("combined"))
+	.get("/", (req, res)=>{
+		res.send( mainTemplate(prepareLocalPageData( dataManager.data, config.get("app") )) )
 	})
-})
-
-app.get("/main.css", (req, res, next)=>{
-	const LESS_FILE = "src/less/main.less"
-
-	fs.readFile(LESS_FILE, "utf8", (err, data)=>{
-		if (err) { next(err) }
-
-		less.render(data,
-			{
-				filename: LESS_FILE,
-				compress: false
-			},
-			(err, output) => {
-				if (err) {
-					winston.error(`Error rendering CSS from LESS file '${LESS_FILE}'\n${err}`)
-					next(err)
-				}
-
-				res.type("text/css").send( output.css )
-			})
+	.get("/skills", (req, res)=>{
+		res.send( skillsTemplate(prepareLocalPageData( dataManager.data, config.get("app") )) )
 	})
-})
-app.listen(config.port, ()=>{
-	winston.info(`Listening on ${url.format(config)}`)
-})
+	.get("/resume.pdf",(req, res)=>{
+		let pdfPageData = prepareLocalPageData( Object.assign({}, dataManager.data, {docformat:"pdf"}), config.get("app") )
+		const html = mainTemplate(pdfPageData)
+		const pdfConfig = config.get("pdf-html")
+
+		pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
+			res.type("pdf")
+			res.set("Content-Disposition", "attachment; filename=resume.pdf")
+			stream.pipe(res)
+		})
+	})
+	.get("/main.css", (req, res)=>{
+		res.type("text/css").send( lessManager.css )
+	})
+	.listen(config.get("server.port"), ()=>{
+		winston.info(`Listening on ${url.format(config.get("server"))}`)
+	})
 
 
 function prepareLocalPageData (sourceData, config) {
@@ -93,7 +67,7 @@ function prepareLocalPageData (sourceData, config) {
 
 
 function resolveHrefForPdf (html) {
-	const URL_BASE = url.format(config)
+	const URL_BASE = url.format(config.get("server"))
 	const HREF_REGEX = /href="(?!http)([^"]+)"/
 
 	return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)

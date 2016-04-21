@@ -1,15 +1,12 @@
 {
-	"config": {
-		"dataSource": {
-			"location": "data.json",
-			"type": "file-local"
-		},
-		"hostname": "localhost",
-		"port": 3000,
-		"protocol": "http",
+	"app": {
 		"verbosity": "short"
 	},
-	"pdfHtmlConfig": {
+	"dataSource": {
+		"location": "data.json",
+		"type": "file-local"
+	},
+	"pdf-html": {
 		"border": {
 			"bottom": ".25in",
 			"left": ".25in",
@@ -19,5 +16,10 @@
 		"format": "Letter",
 		"orientation": "portrait",
 		"type": "pdf"
+	},
+	"server": {
+		"hostname": "localhost",
+		"port": 3000,
+		"protocol": "http"
 	}
 }
