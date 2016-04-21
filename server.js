@@ -19,7 +19,7 @@ const Utils       = require( "./src/js/Utils" )
 // server objects
 const app         = express()
 const config      = Config.get("config")
-const dataManager = new DataManager(config.datasource)
+const dataManager = new DataManager(config.dataSource)
 const template    = jade.compileFile( "./src/templates/main.jade" )
 
 app.use(express.static( "./static" ))

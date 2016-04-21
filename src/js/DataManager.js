@@ -37,6 +37,12 @@ class DataManager {
 
 	_firebaseInit () {
 		this._firebase = new Firebase(this._config.location)
+
+		this._firebase.on("value", (snapshot)=>{
+			this._data = snapshot.val()
+		}, (err)=>{
+			winston.error(`Failed to parse JSON data from Firebase source ${this._config.location}\n${err}`)
+		})
 	}
 
 	_readDataFile (dataFile) {
