@@ -4,18 +4,17 @@
   "description": "Professional resume for Daniel McQuiston",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine",
     "watch": "nodemon server -e js,jade,less",
     "start": "node server"
   },
   "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "bootstrap": "^3.3.6",
     "config": "^1.20.1",
     "dateformat": "^1.0.12",
-    "eslint": "^2.6.0",
     "express": "^4.13.4",
     "firebase": "^2.4.2",
     "html-pdf": "^2.0.1",
@@ -27,6 +26,7 @@
     "winston": "^2.2.0"
   },
   "devDependencies": {
+    "eslint": "^2.6.0",
     "jasmine": "^2.4.1"
   }
 }
