@@ -81,6 +81,13 @@
         "name": "John Doe",
         "phone": "(555) 555-5555"
     },
+    "personalProjects": [
+        {
+          "short": "Built resume templating app.",
+          "url": "https://github.com/github_username/project_name",
+          "skills": [ "node.js", "Firebase", "jade", "LESS", "Linux", "git" ]
+        }
+    ],
     "studies": [
         {
             "areaOfStudy": "BASc, Computer Science",
