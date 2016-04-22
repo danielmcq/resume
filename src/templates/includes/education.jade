@@ -1,16 +1,14 @@
-- studies = resume.getStudies()
-if studies.length
-	table.table.table-condensed
-		thead
+table.table.table-condensed
+	thead
+		tr
+			th School
+			th Where
+			th Study
+			th When
+	tbody
+		each study in studies
 			tr
-				th School
-				th Where
-				th Study
-				th When
-		tbody
-			each study in studies
-				tr
-					td= study.institution
-					td= study.location
-					td= study.areaOfStudy
-					td= $utils.dateRange(study.attendStart, study.attendEnd)
+				td= study.institution
+				td= study.location
+				td= study.areaOfStudy
+				td= $utils.dateRange(study.attendStart, study.attendEnd)

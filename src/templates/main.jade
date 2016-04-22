@@ -16,9 +16,11 @@ block content
 
 				include ./includes/accomplishments.jade
 
-	.row
-		.col-md-12.col-xs-12
-			h1#education Education
-	.row
-		.col-md-12.col-xs-12
-			include ./includes/education.jade
+	- studies = resume.getStudies()
+	if studies.length
+		.row
+			.col-md-12.col-xs-12
+				h1#education Education
+		.row
+			.col-md-12.col-xs-12
+				include ./includes/education.jade
