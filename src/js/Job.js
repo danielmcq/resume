@@ -1,6 +1,6 @@
 "use strict"
 
-const Describer = require("./Describer")
+const Describer        = require("./Describer")
 const ProjectDescriber = require("./ProjectDescriber")
 
 class Job {
@@ -22,10 +22,10 @@ class Job {
 
 		this.config = Object.assign({}, OPTS_DEFAULT, options)
 
-		this._initDescribers(this.data.accomplishments)
-		this._initDescribers(this.data.duties)
-		this._initDescribers(this.data.projects, ProjectDescriber)
-		this._initDescribers(this.data.skills)
+		Describer.initDescriberList(this.data.accomplishments)
+		Describer.initDescriberList(this.data.duties)
+		Describer.initDescriberList(this.data.projects, ProjectDescriber)
+		Describer.initDescriberList(this.data.skills)
 	}
 
 	get (field) {
@@ -70,26 +70,7 @@ class Job {
 
 	getProjects () { return this.data.projects }
 
-	getSkills () { return this.data.skills.sort((a, b)=>{
-		let result = 0
-
-		if (a.text().toLowerCase() > b.text().toLowerCase()) { result = 1 }
-		if (a.text().toLowerCase() < b.text().toLowerCase()) { result = -1 }
-
-		return result
-	}) }
-
-	_initDescribers (describers, Subdescriber){
-		Subdescriber = Subdescriber || Describer
-
-		for (let i in describers) {
-			if ( !(describers[i] instanceof Subdescriber) ) {
-				describers[i] = new Subdescriber(describers[i], this.config)
-			}
-		}
-
-		return describers
-	}
+	getSkills () { return Describer.sortDescriberList(this.data.skills) }
 }
 
 module.exports = Job

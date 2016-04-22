@@ -13,6 +13,34 @@ class Describer {
 		this.config = Object.assign({}, OPTS_DEFAULT, options)
 	}
 
+
+	static initDescriberList (describers, Subdescriber) {
+		Subdescriber = Subdescriber || Describer
+
+		for (let i in describers) {
+			if ( !(describers[i] instanceof Subdescriber) ) {
+				describers[i] = new Subdescriber(describers[i], this.config)
+			}
+		}
+
+		return describers
+	}
+
+	static sortDescriberList (arrayOfDescribers) {
+		return arrayOfDescribers.sort((a, b)=>{
+			let result = 0
+
+			if ( !(a instanceof Describer) || !(b instanceof Describer) ) {
+				throw new Error("Element in list not an instance of Describer class"+a, b)
+			}
+
+			if (a.text().toLowerCase() > b.text().toLowerCase()) { result = 1 }
+			if (a.text().toLowerCase() < b.text().toLowerCase()) { result = -1 }
+
+			return result
+		})
+	}
+
 	text () {
 		const VERBOSITY = this.config.verbosity
 

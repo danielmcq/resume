@@ -1,0 +1,7 @@
+each personalProject in personalProjects
+	.col-xs-12.col-md-6!= personalProject.text()
+	.col-xs-12.col-md-6.skills-section
+		- projectSkills = personalProject.getSkills()
+		include ./project-skills.jade
+	.col-md-12
+		hr

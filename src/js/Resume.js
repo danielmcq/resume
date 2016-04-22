@@ -32,6 +32,8 @@ class Resume {
 
 	getPerson () { return this.data.person }
 
+	getPersonalProjects () { return this.data.personalProjects }
+
 	getStudies () { return this.data.studies }
 
 	_initJobs (jobs) {

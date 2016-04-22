@@ -16,6 +16,14 @@ block content
 
 				include ./includes/accomplishments.jade
 
+	- personalProjects = resume.getPersonalProjects()
+	if personalProjects.length
+		.row
+			.col-md-12.col-xs-12
+				h1#personalProjects Personal Projects
+			.col-md-12.col-xs-12
+				include ./includes/personalProjects.jade
+
 	- studies = resume.getStudies()
 	if studies.length
 		.row
