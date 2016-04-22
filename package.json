@@ -1,11 +1,11 @@
 {
   "name": "resume",
-  "version": "1.0.0",
-  "description": "Professional resume for Daniel McQuiston",
+  "version": "1.0.1",
+  "description": "Resume templating app",
   "main": "server.js",
   "scripts": {
     "test": "jasmine",
-    "watch": "nodemon server -e js,jade,less",
+    "watch": "nodemon server -e js",
     "start": "node server"
   },
   "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
