@@ -8,15 +8,15 @@ block content
 				h1#work-experience Work Experience
 		.row
 			each job in jobs
-				include ./includes/job-header.jade
+				include ./includes/job-header.pug
 
-				include ./includes/duties-6.jade
+				include ./includes/duties-6.pug
 
-				include ./includes/projects-6.jade
+				include ./includes/projects-6.pug
 
-				include ./includes/accomplishments-6.jade
+				include ./includes/accomplishments-6.pug
 
-				include ./includes/skills-6.jade
+				include ./includes/skills-6.pug
 
 				.col-xs-12
 					hr
@@ -27,7 +27,7 @@ block content
 			.col-md-12.col-xs-12
 				h1#personalProjects Personal Projects
 			.col-md-12.col-xs-12
-				include ./includes/personalProjects.jade
+				include ./includes/personalProjects.pug
 
 	- studies = resume.getStudies()
 	if studies.length
@@ -36,4 +36,4 @@ block content
 				h1#education Education
 		.row
 			.col-md-12.col-xs-12
-				include ./includes/education.jade
+				include ./includes/education.pug

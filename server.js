@@ -19,8 +19,8 @@ const dataManager     = new DataManager( config.get("dataSource") )
 const templateManager = new TemplateManager({
 	verbosity: config.get("app.verbosity"),
 	templates:{
-		main: path.join(__dirname, "src/templates/main.jade"),
-		skills: path.join(__dirname, "src/templates/skill-focus.jade")
+		main: path.join(__dirname, "src/templates/main.pug"),
+		skills: path.join(__dirname, "src/templates/skill-focus.pug")
 	}
 }, dataManager)
 

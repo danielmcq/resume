@@ -8,13 +8,13 @@ block content
 				h1#work-experience Work Experience
 		.row
 			each job in jobs
-				include ./includes/job-header.jade
+				include ./includes/job-header.pug
 
-				include ./includes/duties.jade
+				include ./includes/duties.pug
 
-				include ./includes/projects.jade
+				include ./includes/projects.pug
 
-				include ./includes/accomplishments.jade
+				include ./includes/accomplishments.pug
 
 	- personalProjects = resume.getPersonalProjects()
 	if personalProjects.length
@@ -22,7 +22,7 @@ block content
 			.col-md-12.col-xs-12
 				h1#personalProjects Personal Projects
 			.col-md-12.col-xs-12
-				include ./includes/personalProjects.jade
+				include ./includes/personalProjects.pug
 
 	- studies = resume.getStudies()
 	if studies.length
@@ -31,4 +31,4 @@ block content
 				h1#education Education
 		.row
 			.col-md-12.col-xs-12
-				include ./includes/education.jade
+				include ./includes/education.pug

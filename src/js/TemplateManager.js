@@ -1,7 +1,7 @@
 "use strict"
 
 const fs        = require("fs")
-const jade      = require("jade")
+const pug       = require("pug")
 const Resume    = require("./Resume")
 const Utils     = require("./Utils")
 
@@ -29,14 +29,14 @@ class TemplateManager {
 
 		for (let templateName in this._config.templates) {
 			const TEMPLATE_FILE = this._config.templates[templateName]
-			this._renderers[templateName] = jade.compileFile( TEMPLATE_FILE )
+			this._renderers[templateName] = pug.compileFile( TEMPLATE_FILE )
 			this._dataManager.on("data",(data)=>{
 				this._docs[templateName] = this._renderers[templateName](this._prepareLocalPageData( data, this._config ))
 			})
 
 			fs.watch(TEMPLATE_FILE, (event)=>{
 				if (event === "change") {
-					this._renderers[templateName] = jade.compileFile( TEMPLATE_FILE )
+					this._renderers[templateName] = pug.compileFile( TEMPLATE_FILE )
 					this._docs[templateName] = this._renderers[templateName](this._prepareLocalPageData( this._dataManager.data, this._config ))
 				}
 			})
