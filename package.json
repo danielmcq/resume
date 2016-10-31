@@ -16,11 +16,10 @@
     "config": "^1.20.1",
     "dateformat": "^1.0.12",
     "express": "^4.13.4",
-    "firebase": "^2.4.2",
+    "firebase": "^3.5.2",
     "html-pdf": "^2.0.1",
     "less": "^2.6.1",
     "morgan": "^1.7.0",
-    "nodemon": "^1.9.1",
     "phone-formatter": "0.0.2",
     "pug": "^2.0",
     "winston": "^2.2.0"
