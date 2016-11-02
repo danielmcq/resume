@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jasmine",
     "watch": "./node_modules/.bin/nodemon",
+    "prestart": "npm install && npm prune",
     "start": "./node_modules/.bin/nodemon"
   },
   "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
