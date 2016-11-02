@@ -39,9 +39,10 @@ class DataManager extends EventEmitter {
 	}
 
 	_firebaseInit () {
-		this._firebase = new Firebase(this._config.location)
+		Firebase.initializeApp({databaseURL: this._config.location})
+		this._firebase = Firebase.database()
 
-		this._firebase.on("value", (snapshot)=>{
+		this._firebase.ref("/").on("value", (snapshot)=>{
 			this._data = snapshot.val()
 			this.emit("data", this._data)
 		}, (err)=>{
