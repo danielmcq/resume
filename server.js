@@ -19,6 +19,7 @@ const dataManager     = new DataManager( config.get("dataSource") )
 const templateManager = new TemplateManager({
 	verbosity: config.get("app.verbosity"),
 	templates:{
+		long: path.join(__dirname, "src/templates/long.pug"),
 		main: path.join(__dirname, "src/templates/main.pug"),
 		skills: path.join(__dirname, "src/templates/skill-focus.pug")
 	}
@@ -31,6 +32,9 @@ express()
 	})
 	.get("/skills", (req, res)=>{
 		res.send( templateManager.html("skills") )
+	})
+	.get("/long", (req, res)=>{
+		res.send( templateManager.html("long") )
 	})
 	.get("/resume.pdf",(req, res)=>{
 		const html = templateManager.customRender("main", {docformat:"pdf"})

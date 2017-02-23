@@ -1,0 +1,39 @@
+extend default
+
+block content
+	- jobs = resume.getJobs()
+	if jobs.length
+		.row
+			.col-md-12.col-xs-12
+				h1#work-experience Work Experience
+		.row
+			each job in jobs
+				include ./includes/job-header.pug
+
+				include ./includes/duties.pug
+
+				include ./includes/projects.pug
+
+				include ./includes/accomplishments.pug
+
+				include ./includes/skills-6.pug
+
+				.col-xs-12
+					hr
+
+	- personalProjects = resume.getPersonalProjects()
+	if personalProjects.length
+		.row
+			.col-md-12.col-xs-12
+				h1#personalProjects Personal Projects
+			.col-md-12.col-xs-12
+				include ./includes/personalProjects.pug
+
+	- studies = resume.getStudies()
+	if studies.length
+		.row
+			.col-md-12.col-xs-12
+				h1#education Education
+		.row
+			.col-md-12.col-xs-12
+				include ./includes/education.pug
