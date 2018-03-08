@@ -25,6 +25,8 @@ const templateManager = new TemplateManager({
   },
 }, dataManager)
 
+const serverConf = Object.assign({},config.get('server'),{port:process.env.port})
+
 express()
   .use(morgan('combined'))
   .get('/', (req, res)=>{
@@ -68,6 +70,6 @@ express()
       .then(css => res.type('text/css').send(css))
       .catch(err => res.send(err))
   })
-  .listen(config.get('server.port'), ()=>{
-    winston.info(`Listening on ${url.format(config.get('server'))}`)
+  .listen(serverConf.port, ()=>{
+    winston.info(`Listening on ${url.format(serverConf)}`)
   })
