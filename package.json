@@ -1,15 +1,15 @@
 {
   "name": "resume",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Resume templating app",
   "main": "server.js",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "jasmine",
+    "prewatch": "npm install && npm prune",
     "watch": "nodemon",
-    "prestart": "npm install && npm prune",
-    "start": "nodemon"
+    "start": "node server.js"
   },
   "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
   "license": "MIT",
