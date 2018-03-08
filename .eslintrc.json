@@ -1,32 +1,96 @@
 {
-    "env": {
-        "es6": true,
-        "node": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "sourceType": "module"
-    },
-    "rules": {
-        "indent": [
-            2,
-            "tab"
-        ],
-        "linebreak-style": [
-            2,
-            "unix"
-        ],
-        "quotes": [
-            2,
-            "double"
-        ],
-        "semi": [
-            2,
-            "never"
-        ],
-        "no-mixed-spaces-and-tabs": [
-            2,
-            "smart-tabs"
-        ]
-    }
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "mocha": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "no-await-in-loop": [
+      "error"
+    ],
+    "space-in-parens": [
+      "error",
+      "never"
+    ],
+    "no-multi-spaces": [
+      "error",
+      {
+        "exceptions": {
+          "Property": true,
+          "VariableDeclarator": true,
+          "ImportDeclaration": true
+        }
+      }
+    ],
+    "key-spacing": [
+      "error",
+      {
+        "align": {
+          "beforeColon": false,
+          "afterColon": true,
+          "on": "value",
+          "mode": "strict"
+        },
+        "multiLine": {
+          "beforeColon": false,
+          "afterColon": true
+        }
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      {
+        "objects": "always-multiline"
+      }
+    ],
+    "prefer-template": [
+      "error"
+    ],
+    "func-style": [
+      "warn",
+      "declaration",
+      {
+        "allowArrowFunctions": true
+      }
+    ],
+    "no-var": "error",
+    "prefer-const": "warn",
+    "indent": [
+      "warn",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "no-console": [
+      "warn"
+    ],
+    "no-unused-vars": [
+      "warn"
+    ],
+    "no-trailing-spaces": [
+      "error",
+      {
+        "ignoreComments": true
+      }
+    ]
+  }
 }

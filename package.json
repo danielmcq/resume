@@ -4,6 +4,8 @@
   "description": "Resume templating app",
   "main": "server.js",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "test": "jasmine",
     "watch": "./node_modules/.bin/nodemon",
     "prestart": "npm install && npm prune",
@@ -26,7 +28,7 @@
     "winston": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^2.6.0",
+    "eslint": "^4.18.2",
     "jasmine": "^2.4.1",
     "nodemon": "^1.11.0"
   }
