@@ -1,17 +1,17 @@
-"use strict"
+'use strict'
 
 class Study {
-	constructor (options) {
-		const DEFAULTS = {
-			institution:"",
-			location:"",
-			areaOfStudy:"",
-			attendStart:null,
-			attendEnd: null
-		}
+  constructor (options) {
+    const DEFAULTS = {
+      institution: '',
+      location:    '',
+      areaOfStudy: '',
+      attendStart: null,
+      attendEnd:   null,
+    }
 
-		Object.assign(this, DEFAULTS, options)
-	}
+    Object.assign(this, DEFAULTS, options)
+  }
 }
 
 module.exports = Study
