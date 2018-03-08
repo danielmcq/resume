@@ -25,7 +25,8 @@ const templateManager = new TemplateManager({
   },
 }, dataManager)
 
-const serverConf = Object.assign({},config.get('server'),{port:process.env.port})
+const serverConf = Object.assign({},config.get('server'))
+if (process.env.port) serverConf.port = process.env.port
 
 express()
   .use(morgan('combined'))
