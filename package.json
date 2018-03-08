@@ -7,9 +7,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "test": "jasmine",
+    "prewatch": "npm install && npm prune",
     "watch": "nodemon",
-    "prestart": "npm install && npm prune",
-    "start": "nodemon"
+    "start": "node server.js"
   },
   "author": "Daniel McQuiston <daniel.pro@dehugo.net>",
   "license": "MIT",
