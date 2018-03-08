@@ -1,40 +1,40 @@
-"use strict"
+'use strict'
 
-const Describer = require("./Describer")
-const url       = require("url")
+const Describer = require('./Describer')
+const url       = require('url')
 
 class ProjectDescriber extends Describer {
-	constructor (data, options) {
-		super( Object.assign({skills:[]}, data), options )
+  constructor (data, options) {
+    super(Object.assign({skills: []}, data), options)
 
-		Describer.initDescriberList(this.data.skills)
-	}
+    Describer.initDescriberList(this.data.skills)
+  }
 
-	getSkills () { return Describer.sortDescriberList(this.data.skills) }
+  getSkills () { return Describer.sortDescriberList(this.data.skills) }
 
-	text () {
-		let output = super.text()
+  text () {
+    let output = super.text()
 
-		if (this.data.client) {
-			output += ` (${this.data.client})`
-		} else if (this.data.url) {
-			output += ` (${this._wrapAnchor(this.data.url)})`
-		}
+    if (this.data.client) {
+      output += ` (${this.data.client})`
+    } else if (this.data.url) {
+      output += ` (${this._wrapAnchor(this.data.url)})`
+    }
 
-		return output
-	}
+    return output
+  }
 
-	_wrapAnchor (text) {
-		const PARSED = url.parse(text)
+  _wrapAnchor (text) {
+    const PARSED = url.parse(text)
 
-		let output = text
+    let output = text
 
-		if (PARSED.protocol) {
-			output = `<a href="${url.format(PARSED)}" target="_blank">${text}</a>`
-		}
+    if (PARSED.protocol) {
+      output = `<a href="${url.format(PARSED)}" target="_blank">${text}</a>`
+    }
 
-		return output
-	}
+    return output
+  }
 }
 
 module.exports = ProjectDescriber
