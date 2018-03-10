@@ -1,12 +1,13 @@
-.col-xs-12
-	h2.job-title= job.get("title")
-.col-xs-3
-	i.company-location.city-state= job.get("location")
-.col-xs-3.col-xs-offset-1.text-center
-	if job.get("company")
-		i.company-name!= job.get("company")
-.col-xs-3.col-xs-offset-2
-	span.job-date-range.pull-right
+.row
+	h2.col
+		i.job-title= job.get("title")
+		if job.get("company")
+			span!="&nbsp;-&nbsp;"
+			i.company-name!= job.get("company")
+.row
+	.col
+		i.company-location.city-state= job.get("location")
+	.col.job-date-range
 		i.job-start.month-year= $utils.shortDate(job.get("start-date"))
 		span!="&nbsp;-&nbsp;"
 		if job.get("end-date")

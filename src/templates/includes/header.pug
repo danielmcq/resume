@@ -1,12 +1,11 @@
 //- if (docformat === "pdf")
 	//- link(rel="stylesheet", href="main.css")
-.row.header
-	header
-		div.col-xs-12.col-md-3.text-left
-			span.contact-name= resume.getPerson().name
-		div.col-xs-6.col-md-3.text-center
-			a.contact-email(href="mailto:"+resume.getPerson().email)= resume.getPerson().email
-		div.col-xs-6.col-md-3.text-center
-			a.contact-github(href="https://github.com/"+resume.getPerson().github, target="_blank")= "github.com/"+resume.getPerson().github
-		div.col-xs-12.col-md-3.text-right
-			a(href="tel:+1"+Utils.phone.normalize(resume.getPerson().phone)).contact-phone= Utils.phone.format(resume.getPerson().phone, "NNN.NNN.NNNN")
+header.row.header
+	div.col-sm.text-left
+		span.contact-name= resume.getPerson().name
+	div.col-sm.text-center
+		a.contact-email(href="mailto:"+resume.getPerson().email)= resume.getPerson().email
+	div.col-sm.text-center
+		a.contact-github(href="https://github.com/"+resume.getPerson().github, target="_blank")= "github.com/"+resume.getPerson().github
+	div.col-sm.text-right
+		a(href="tel:+1"+Utils.phone.normalize(resume.getPerson().phone)).contact-phone= Utils.phone.format(resume.getPerson().phone, "NNN.NNN.NNNN")

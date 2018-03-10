@@ -1,4 +1,8 @@
-@import "../../node_modules/bootstrap/less/bootstrap";
+html {
+	font-size: 14px;
+}
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 h1 {
 	font-size: 24px;
@@ -14,14 +18,14 @@ h1, h2, h3 {
 }
 
 .row.header {
-	background-color: @gray-lighter;
+	background-color: $gray-200;
 	line-height: 2em;
 }
 
 .company-name,
 .company-location,
 .job-date-range {
-	color: @gray-light;
+	color: $gray-500;
 }
 
 .skills-section {
@@ -43,11 +47,19 @@ h1, h2, h3 {
 	}
 }
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: map-get($grid-breakpoints, sm)) {
 	header {
 		.text-right,
 		.text-left {
 			text-align: center;
 		}
 	}
+}
+
+body {
+	background-color: $gray-600;
+}
+
+main.container {
+	background-color: $white;
 }
