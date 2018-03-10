@@ -1,10 +1,11 @@
-@import "../../node_modules/bootstrap/less/bootstrap";
-@import "main";
 
 @media print {
 	body {
 		font-size: 8pt;
 		line-height: 10pt;
+
+		@import "../../node_modules/bootstrap/scss/bootstrap";
+		@import "main";
 
 		h1 {
 			font-size: 12pt;
@@ -44,7 +45,7 @@
 	}
 
 	.header {
-		border-bottom: 1pt solid @gray-base;
+		border-bottom: 1pt solid $gray-700;
 	}
 
 	.table {

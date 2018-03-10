@@ -1,8 +1,10 @@
 - duties = job.getDuties()
 if duties.length
-	.col-xs-12
-		h3 Duties
-	.col-xs-12
-		ul
-			each duty in duties
-				li= duty.text()
+	.row
+		.col
+			h3 Duties
+	.row
+		.col
+			ul
+				each duty in duties
+					li= duty.text()

@@ -11,7 +11,7 @@ const winston = require('winston')
 
 // project classes
 const DataManager     = require('./src/js/DataManager')
-const LessManager     = require('./src/js/LessManager')
+const SassManager     = require('./src/js/SassManager')
 const TemplateManager = require('./src/js/TemplateManager')
 
 // server objects
@@ -57,17 +57,17 @@ express()
     }
   })
   .get('/main.css', (req, res)=>{
-    const lessManager = new LessManager()
+    const sassManager = new SassManager()
 
-    lessManager.css()
+    sassManager.css()
       .then(css => res.type('text/css').send(css))
       .catch(err => res.send(err))
   })
   .get('/print.css', (req, res)=>{
-    const filename = path.join(process.cwd(), '/src/less/print.less')
-    const lessManager = new LessManager({filename})
+    const filename = path.join(process.cwd(), '/src/sass/print.scss')
+    const sassManager = new SassManager({filename})
 
-    lessManager.css()
+    sassManager.css()
       .then(css => res.type('text/css').send(css))
       .catch(err => res.send(err))
   })

@@ -4,22 +4,22 @@ block content
 	- jobs = resume.getJobs()
 	if jobs.length
 		.row
-			.col-md-12.col-xs-12
+			.col
 				h1#work-experience Work Experience
+		each job in jobs
+			include ./includes/job-header.pug
+
+			include ./includes/duties.pug
+
+			include ./includes/projects.pug
+
+			include ./includes/accomplishments.pug
+
+			include ./includes/skills-6.pug
+
 		.row
-			each job in jobs
-				include ./includes/job-header.pug
-
-				include ./includes/duties.pug
-
-				include ./includes/projects.pug
-
-				include ./includes/accomplishments.pug
-
-				include ./includes/skills-6.pug
-
-				.col-xs-12
-					hr
+			.col
+				hr
 
 	- personalProjects = resume.getPersonalProjects()
 	if personalProjects.length
