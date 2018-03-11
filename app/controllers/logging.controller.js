@@ -11,7 +11,8 @@ const timestamp = ()=>moment.utc().format()
 winston.emitErrs = true
 
 module.exports = label=>{
-  if (customerLoggers[label.toLowerCase()]) return customerLoggers[label.toLowerCase()]
+  label = label.toLowerCase()
+  if (customerLoggers[label]) return customerLoggers[label]
   else return defaultLogger
 }
 
