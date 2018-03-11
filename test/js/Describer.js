@@ -1,4 +1,3 @@
-/* global beforeEach, describe, expect, it*/
 'use strict'
 
 const Describer = require('../../app/controllers/Describer')
