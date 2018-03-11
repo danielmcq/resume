@@ -10,19 +10,19 @@ const url     = require('url')
 const winston = require('winston')
 
 // project classes
-const DataManager     = require('./src/js/DataManager')
-const errors          = require('./src/js/errors')
-const SassManager     = require('./src/js/SassManager')
-const TemplateManager = require('./src/js/TemplateManager')
+const DataManager     = require('./controllers/DataManager')
+const errors          = require('./misc/errors')
+const SassManager     = require('./controllers/SassManager')
+const TemplateManager = require('./controllers/TemplateManager')
 
 // server objects
 const dataManager     = new DataManager(config.get('dataSource'))
 const templateManager = new TemplateManager({
   verbosity: config.get('app.verbosity'),
   templates: {
-    long:   path.join(__dirname, 'src/templates/long.pug'),
-    main:   path.join(__dirname, 'src/templates/main.pug'),
-    skills: path.join(__dirname, 'src/templates/skill-focus.pug'),
+    long:   path.join(__dirname, './templates/long.pug'),
+    main:   path.join(__dirname, './templates/main.pug'),
+    skills: path.join(__dirname, './templates/skill-focus.pug'),
   },
 }, dataManager)
 

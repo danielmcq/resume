@@ -1,6 +1,6 @@
 'use strict'
 
-const errors       = require('./errors')
+const errors       = require('../misc/errors')
 const path         = require('path')
 const sass         = require('sass')
 const StyleManager = require('./StyleManager')
@@ -8,7 +8,7 @@ const winston      = require('winston')
 
 const OPT_DEFAULTS = {
   compress:  false,
-  stylesDir: path.join(process.cwd(), '/src/sass'),
+  stylesDir: path.join(process.cwd(), '/app/sass'),
   stylesExt: '.scss',
 }
 

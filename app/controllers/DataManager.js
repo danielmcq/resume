@@ -4,7 +4,7 @@ const EventEmitter = require('events')
 const Firebase     = require('firebase')
 const fs           = require('fs')
 const path         = require('path')
-const Utils        = require('./Utils')
+const Utils        = require('../misc/Utils')
 const winston      = require('winston')
 
 class DataManager extends EventEmitter {

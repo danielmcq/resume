@@ -2,8 +2,8 @@
 
 const fs        = require('fs')
 const pug       = require('pug')
-const Resume    = require('./Resume')
-const Utils     = require('./Utils')
+const Resume    = require('../models/Resume')
+const Utils     = require('../misc/Utils')
 
 class TemplateManager {
   constructor (options, dataManager) {

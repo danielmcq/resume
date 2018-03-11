@@ -1,8 +1,8 @@
 /* global beforeEach, describe, expect, it*/
 'use strict'
 
-const Describer = require('../../src/js/Describer')
-const Job = require('../../src/js/Job')
+const Describer = require('../../app/controllers/Describer')
+const Job = require('../../app/models/Job')
 
 describe('Job', ()=>{
   const DATA_1 = {
