@@ -1,7 +1,7 @@
 'use strict'
 
-const Describer = require('../../app/controllers/Describer')
-const Job = require('../../app/models/Job')
+const Describer = require('../controllers/Describer')
+const Job = require('./Job')
 
 describe('Job', ()=>{
   const DATA_1 = {

@@ -1,6 +1,6 @@
 'use strict'
 
-const Describer = require('../../app/controllers/Describer')
+const Describer = require('./Describer')
 
 describe('Describer',()=>{
   const DATA_1 = {
