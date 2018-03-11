@@ -61,6 +61,6 @@ function stylesEndpoint () {
 
 function templateEndoint (templateName) {
   return (req, res)=>{
-    res.send(templateManager.html(templateName))
+    res.type('html').send(templateManager.html(templateName))
   }
 }
