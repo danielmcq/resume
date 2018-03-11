@@ -29,7 +29,7 @@ module.exports = class SassManager extends StyleManager {
           if (err.file === null) reject(new errors.FILE_NOT_FOUND)
           else reject(err)
         } else {
-          logger.debug('sass render complete', styleFilepath)
+          logger.debug('Render complete:', styleFilepath)
           resolve(data.css)
         }
       })
