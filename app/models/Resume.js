@@ -2,7 +2,7 @@
 
 const Job = require('./Job')
 const Person = require('./Person')
-const ProjectDescriber = require('./ProjectDescriber')
+const ProjectDescriber = require('../controllers/ProjectDescriber')
 const Study = require('./Study')
 
 class Resume {

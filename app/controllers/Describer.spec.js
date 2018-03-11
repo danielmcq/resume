@@ -1,7 +1,6 @@
-/* global beforeEach, describe, expect, it*/
 'use strict'
 
-const Describer = require('../../src/js/Describer')
+const Describer = require('./Describer')
 
 describe('Describer',()=>{
   const DATA_1 = {

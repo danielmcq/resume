@@ -4,10 +4,12 @@ const EventEmitter = require('events')
 const Firebase     = require('firebase')
 const fs           = require('fs')
 const path         = require('path')
-const Utils        = require('./Utils')
-const winston      = require('winston')
+const Utils        = require('../misc/Utils')
+const logging      = require('./logging.controller')
 
-class DataManager extends EventEmitter {
+const logger = logging('datamgr')
+
+module.exports = class DataManager extends EventEmitter {
   constructor (options) {
     super()
 
@@ -46,7 +48,7 @@ class DataManager extends EventEmitter {
       this._data = snapshot.val()
       this.emit('data', this._data)
     }, (err)=>{
-      winston.error(`Failed to parse JSON data from Firebase source ${this._config.location}\n${err}`)
+      logger.error(`Failed to parse JSON data from Firebase source ${this._config.location}\n${err}`)
     })
   }
 
@@ -60,10 +62,8 @@ class DataManager extends EventEmitter {
           this.emit('data', this._data)
         }
       } catch (er) {
-        winston.error(`Failed to parse JSON data from '${dataFile}'\n${er}`)
+        logger.error(`Failed to parse JSON data from '${dataFile}'\n${er}`)
       }
     })
   }
 }
-
-module.exports = DataManager

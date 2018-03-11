@@ -1,7 +1,7 @@
 'use strict'
 
-const Describer        = require('./Describer')
-const ProjectDescriber = require('./ProjectDescriber')
+const Describer        = require('../controllers/Describer')
+const ProjectDescriber = require('../controllers/ProjectDescriber')
 
 class Job {
   constructor (data, options) {
