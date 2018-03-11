@@ -12,7 +12,13 @@ const DataManager     = require('./controllers/DataManager')
 const SassManager     = require('./controllers/SassManager')
 const TemplateManager = require('./controllers/TemplateManager')
 
-// server objects
+module.exports = express.Router()
+  .get('/',templateEndoint('main'))
+  .get('/skills',templateEndoint('skills'))
+  .get('/long',templateEndoint('long'))
+  .get('/resume.pdf',pdfEndpoint())
+  .get('/styles/*.css',stylesEndpoint())
+
 const dataManager     = new DataManager(config.get('dataSource'))
 const templateManager = new TemplateManager({
   verbosity: config.get('app.verbosity'),
@@ -23,17 +29,8 @@ const templateManager = new TemplateManager({
   },
 }, dataManager)
 
-const router = express.Router()
-  .get('/', (req, res)=>{
-    res.send(templateManager.html('main'))
-  })
-  .get('/skills', (req, res)=>{
-    res.send(templateManager.html('skills'))
-  })
-  .get('/long', (req, res)=>{
-    res.send(templateManager.html('long'))
-  })
-  .get('/resume.pdf',(req, res)=>{
+function pdfEndpoint () {
+  return (req, res)=>{
     const html = templateManager.customRender('main', {docformat: 'pdf'})
     const pdfConfig = config.get('pdf-html')
 
@@ -42,10 +39,15 @@ const router = express.Router()
       res.set('Content-Disposition', 'attachment; filename=resume.pdf')
       stream.pipe(res)
     })
-  })
-  .get('/styles/*.css',stylesEndpoint())
+  }
+}
 
-module.exports = router
+function resolveHrefForPdf (html) {
+  const URL_BASE = url.format(config.get('server'))
+  const HREF_REGEX = /href="(?!http)([^"]+)"/
+
+  return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)
+}
 
 function stylesEndpoint () {
   const sassManager = new SassManager()
@@ -57,9 +59,8 @@ function stylesEndpoint () {
   }
 }
 
-function resolveHrefForPdf (html) {
-  const URL_BASE = url.format(config.get('server'))
-  const HREF_REGEX = /href="(?!http)([^"]+)"/
-
-  return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)
+function templateEndoint (templateName) {
+  return (req, res)=>{
+    res.send(templateManager.html(templateName))
+  }
 }
