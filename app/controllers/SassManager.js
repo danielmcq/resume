@@ -4,7 +4,9 @@ const errors       = require('../misc/errors')
 const path         = require('path')
 const sass         = require('sass')
 const StyleManager = require('./StyleManager')
-const winston      = require('winston')
+const logging      = require('./logging.controller')
+
+const logger = logging('sass')
 
 const OPT_DEFAULTS = {
   compress:  false,
@@ -27,7 +29,7 @@ module.exports = class SassManager extends StyleManager {
           if (err.file === null) reject(new errors.FILE_NOT_FOUND)
           else reject(err)
         } else {
-          winston.debug('sass render complete', styleFilepath)
+          logger.debug('sass render complete', styleFilepath)
           resolve(data.css)
         }
       })
