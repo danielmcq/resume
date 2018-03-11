@@ -11,6 +11,7 @@ const winston = require('winston')
 
 // project classes
 const DataManager     = require('./src/js/DataManager')
+const errors          = require('./src/js/errors')
 const SassManager     = require('./src/js/SassManager')
 const TemplateManager = require('./src/js/TemplateManager')
 
@@ -56,21 +57,27 @@ express()
       return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)
     }
   })
-  .get('/main.css', (req, res)=>{
-    const sassManager = new SassManager()
-
-    sassManager.css()
-      .then(css => res.type('text/css').send(css))
-      .catch(err => res.send(err))
-  })
-  .get('/print.css', (req, res)=>{
-    const filename = path.join(process.cwd(), '/src/sass/print.scss')
-    const sassManager = new SassManager({filename})
-
-    sassManager.css()
-      .then(css => res.type('text/css').send(css))
-      .catch(err => res.send(err))
-  })
+  .get('/styles/*.css',stylesEndpoint())
+  .use(errorHandler)
   .listen(serverConf.port, ()=>{
     winston.info(`Listening on ${url.format(serverConf)}`)
   })
+
+function stylesEndpoint () {
+  const sassManager = new SassManager()
+
+  return (req,res,next)=>{
+    sassManager.css(req.path)
+      .then(css => res.type('text/css').send(css))
+      .catch(next)
+  }
+}
+
+function errorHandler (err, req, res, next) {
+  if (err instanceof errors.NOT_FOUND) res.status(404).end()
+  else res.status(500).json(err).end()
+  // If express.js does not see the 'next' param in the function definition,
+  // then it will skip it for error handling. The param referenced on this line
+  // so that the linter won't cause a warning about unused params.
+  next
+}

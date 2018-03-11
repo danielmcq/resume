@@ -1,13 +1,16 @@
 'use strict'
 
-const sass         = require('sass')
+const errors       = require('./errors')
 const path         = require('path')
+const sass         = require('sass')
 const StyleManager = require('./StyleManager')
 const winston      = require('winston')
 
-const SASS_FILE = path.join(process.cwd(), '/src/sass/main.scss')
-
-const OPT_DEFAULTS = { compress: false, filename: SASS_FILE }
+const OPT_DEFAULTS = {
+  compress:  false,
+  stylesDir: path.join(process.cwd(), '/src/sass'),
+  stylesExt: '.scss',
+}
 
 module.exports = class SassManager extends StyleManager {
   constructor (options) {
@@ -15,26 +18,17 @@ module.exports = class SassManager extends StyleManager {
     this._config = Object.assign({}, OPT_DEFAULTS, options)
   }
 
-  async css () {
-    if (this._css) return this._css
-    else return this._renderSass()
-  }
-
-  async _renderSass () {
-    const DATA_FILE = this._config.filename
-
+  async _render (styleFilepath) {
     return new Promise((resolve, reject) => {
       sass.render({
-        file: DATA_FILE,
+        file: styleFilepath,
       },(err,data)=>{
         if (err) {
-          const msg = `Error rendering CSS from sass file '${DATA_FILE}'\n${err}`
-          winston.error(msg)
-          reject(msg)
+          if (err.file === null) reject(new errors.FILE_NOT_FOUND)
+          else reject(err)
         } else {
-          this._css = data.css
-          winston.info('sass render complete', this._css.slice(0, 10))
-          resolve(this._css)
+          winston.debug('sass render complete', styleFilepath)
+          resolve(data.css)
         }
       })
     })
