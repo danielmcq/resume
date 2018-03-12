@@ -1,9 +1,8 @@
 'use strict'
 
-const fs        = require('fs')
-const pug       = require('pug')
-const Resume    = require('../models/Resume')
-const Utils     = require('../misc/Utils')
+const pug    = require('pug')
+const Resume = require('../models/Resume')
+const Utils  = require('../misc/Utils')
 
 class TemplateManager {
   constructor (options, dataManager) {
@@ -32,13 +31,6 @@ class TemplateManager {
       this._renderers[templateName] = pug.compileFile(TEMPLATE_FILE)
       this._dataManager.on('data',(data)=>{
         this._docs[templateName] = this._renderers[templateName](this._prepareLocalPageData(data, this._config))
-      })
-
-      fs.watch(TEMPLATE_FILE, (event)=>{
-        if (event === 'change') {
-          this._renderers[templateName] = pug.compileFile(TEMPLATE_FILE)
-          this._docs[templateName] = this._renderers[templateName](this._prepareLocalPageData(this._dataManager.data, this._config))
-        }
       })
     }
   }
