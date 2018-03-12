@@ -11,7 +11,7 @@
   "extends": "eslint:recommended",
   "overrides": [
     {
-      "files": [ "**/*.spec.js"],
+      "files": [ "**/*.spec.js","spec/**/*.js"],
       "env": {
         "jasmine": true
       }
