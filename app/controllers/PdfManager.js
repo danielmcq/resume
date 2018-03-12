@@ -23,7 +23,7 @@ async function createStream (html) {
 
 function resolveHrefForPdf (html) {
   const URL_BASE = url.format(config.get('server'))
-  const HREF_REGEX = /href="(?!http)([^"]+)"/
+  const HREF_REGEX = /href="(?!http)([^"]+)"/g
 
   return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)
 }
