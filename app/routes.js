@@ -34,7 +34,7 @@ function pdfEndpoint () {
     const stream = await PdfManager.createStream(html)
 
     res.type('pdf')
-    res.set('Content-Disposition', 'attachment; filename=resume.pdf')
+    res.set('Content-Disposition', 'inline')
     stream.pipe(res)
   }
 }
