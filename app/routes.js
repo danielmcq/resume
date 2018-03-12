@@ -3,12 +3,11 @@
 // node libs
 const express = require('express')
 const path    = require('path')
-const pdf     = require('html-pdf')
-const url     = require('url')
 
 // project classes
 const config          = require('./controllers/config.controller')
 const DataManager     = require('./controllers/DataManager')
+const PdfManager      = require('./controllers/PdfManager')
 const SassManager     = require('./controllers/SassManager')
 const TemplateManager = require('./controllers/TemplateManager')
 
@@ -30,23 +29,14 @@ const templateManager = new TemplateManager({
 }, dataManager)
 
 function pdfEndpoint () {
-  return (req, res)=>{
+  return async (req, res)=>{
     const html = templateManager.customRender('main', {docformat: 'pdf'})
-    const pdfConfig = config.get('pdf-html')
+    const stream = await PdfManager.createStream(html)
 
-    pdf.create(resolveHrefForPdf(html), pdfConfig).toStream((err, stream)=>{
-      res.type('pdf')
-      res.set('Content-Disposition', 'attachment; filename=resume.pdf')
-      stream.pipe(res)
-    })
+    res.type('pdf')
+    res.set('Content-Disposition', 'attachment; filename=resume.pdf')
+    stream.pipe(res)
   }
-}
-
-function resolveHrefForPdf (html) {
-  const URL_BASE = url.format(config.get('server'))
-  const HREF_REGEX = /href="(?!http)([^"]+)"/
-
-  return html.replace(HREF_REGEX,`href="${URL_BASE}$1"`)
 }
 
 function stylesEndpoint () {
