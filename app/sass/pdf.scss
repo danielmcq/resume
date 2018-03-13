@@ -1,0 +1,81 @@
+
+$pageWidth: 7.5in;
+$pageHeight: 11in;
+$containerWidth: 7in;
+
+@media print {
+	body {
+		font-size: 6pt;
+		line-height: 8pt;
+		height: $pageHeight;
+		width: $pageWidth;
+
+		@import "../../node_modules/bootstrap/scss/bootstrap";
+		@import "main";
+
+		header.row.header {
+			padding: 2pt;
+			.col {
+				max-width: 25%;
+			}
+		}
+
+		.container {
+			max-width: $containerWidth;
+			.row {
+				.col {
+					page-break-inside: avoid;
+					li, div, p {
+						overflow-wrap: break-word;
+						max-width: 5.25in;
+						page-break-inside: avoid;
+					}
+				}
+			}
+		}
+
+		h1 {
+			font-size: 12pt;
+		}
+		h2 {
+			font-size: 10pt;
+		}
+		h3 {
+			font-size: 9pt;
+		}
+
+		.text-left {
+			text-align: left;
+		}
+		.text-center {
+			text-align: center;
+		}
+		.text-right {
+			text-align: right;
+		}
+	}
+
+	a {
+		text-decoration: none;
+
+		&[href]:after {
+			content: none;
+		}
+	}
+
+	.header {
+		border-bottom: 1pt solid $gray-700;
+	}
+
+	.table {
+		&.table-condensed {
+			max-width: 6in;
+			page-break-inside: avoid;
+			tr {
+				td, th {
+					padding: 5pt;
+				}
+			}
+		}
+	}
+}

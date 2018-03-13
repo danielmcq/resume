@@ -1,8 +1,10 @@
 - projects = job.getProjects()
 if projects.length
-	.col-xs-12
-		h3 Projects
-	.col-xs-12
-		ul
-			each project in projects
-				li!= project.text()
+	.row
+		.col
+			h3 Projects
+	.row
+		.col
+			ul
+				each project in projects
+					li!= project.text()

@@ -1,8 +1,10 @@
 - accomplishments = job.getAccomplishments()
 if accomplishments.length
-	.col-xs-12
-		h3 Accomplishments
-	.col-xs-12
-		ul
-			each accomplishment in accomplishments
-				li= accomplishment.text()
+	.row
+		.col
+			h3 Accomplishments
+	.row
+		.col
+			ul
+				each accomplishment in accomplishments
+					li= accomplishment.text()

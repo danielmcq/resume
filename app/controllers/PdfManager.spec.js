@@ -13,7 +13,7 @@ describe('PDF Manager',()=>{
     const updatedHtml = PdfManager.resolveHrefForPdf(html)
 
     expect(updatedHtml).toContain(`${baseUrl}/styles/main.css`)
-    expect(updatedHtml).toContain(`${baseUrl}/styles/print.css`)
+    expect(updatedHtml).toContain(`${baseUrl}/styles/pdf.css`)
   })
 
   it('createStream',async()=>{
