@@ -1,6 +1,6 @@
 {
   "name": "resume",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Resume templating app",
   "main": "server.js",
   "scripts": {
