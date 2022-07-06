@@ -23,7 +23,7 @@
     "firebase": "^8.1.1",
     "html-pdf": "^2.0.1",
     "less": "^3.0.1",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "phone-formatter": "0.0.2",
     "pug": "^2.0.0-beta6",
     "sass": "^1.0.0-beta.5.3",
